@@ -1,0 +1,67 @@
+- id: "allele"
+  order: 1
+  term: "Allele"
+  definition: |-
+    The form of a gene or genetic marker. Two different alleles of a gene or genetic marker differ because of one or more DNA sequence differences at the corresponding location (or locus) in the genome.
+- id: "genetic-marker"
+  order: 2
+  term: "Genetic marker"
+  definition: |-
+    A tool that allows a scientist to detect variation (or the absence of variation) among individuals or between alleles in a particular segment of DNA. Numerous types of genetic marker have been developed, including isozymes, RFLPs, RAPDs, CAPS, PCR-indels, AFLPs, microsatellites (SSRs), SNPs and DNA sequence. Only two of these (microsatellites and SNPs) are defined here.
+- id: "genome"
+  order: 3
+  term: "Genome"
+  definition: |-
+    All of the DNA (in the form of very long molecules called chromosomes) inside each living cell of an organism, containing the genes that encode all the proteins and RNA molecules that make up the organism. In plants there are three genomes, the nuclear genome, the mitochondrial genome, and the chloroplast genome. The vast majority of a plant's DNA resides within the cell nucleus, in the nuclear genome.
+- id: "genomics"
+  order: 4
+  term: "Genomics"
+  definition: |-
+    The study of all of the DNA that makes up an organism. Unless otherwise noted, this term generally refers to the nuclear genome, where the vast majority of the DNA in a organism resides (as opposed to the much smaller mitochondrial or chloroplast genomes). Traditionally, studies in molecular genetics or molecular biology focused on single genes or small gene families. In genomics, the attempt is made to examine phenomena at the genome-wide scale. An example would be variation in the rate of recombination with chromosomal location.
+- id: "linkage-disequilibrium-ld"
+  order: 5
+  term: "Linkage disequilibrium (LD)"
+  definition: |-
+    The non-independence of alleles at different loci. This occurs when certain combinations of alleles across loci occur more often than expected by chance alone, based on their respective allele frequencies in the population. LD can be caused by various combinations of many different factors, including selection, new mutations, population genetic structure, interbreeding of genetically divergent populations (admixture) and population bottlenecks. LD is reduced by recombination, which "shuffles" the combinations of alleles at different loci. Hence, loci in very close proximity on a chromosome ("tightly-linked" loci) tend to retain LD longer than unlinked or more distantly-linked loci, since recombination is rare between tightly-linked loci. For more on LD, see Gaut & Long 2003.
+- id: "locus-plural-loci"
+  order: 6
+  term: "Locus (plural: Loci)"
+  definition: |-
+    The particular chromosomal location of a gene, genetic marker, or other genetic feature in the genome. The exact boundaries of a locus are not always well-defined (exceptions are SNPs and microsatellite repeats, which have clear boundaries, as opposed to genes or RFLP alleles, which do not).
+- id: "microsatellite-ssr"
+  order: 7
+  term: "Microsatellite (SSR)"
+  definition: |-
+    A microsatellite, or a Simple Sequence Repeat (SSR), is a seqment of DNA consisting of numerous tandem repeats of short, simple sequence motifs. An example of a microsatellite is "GAGAGAGAGAGAGAGA", where the dinucleotide motif "GA" is repeated eight times (this can be represented as GA8). Microsatellites are quite common in the genomes of most higher organisms. They are highly mutable, since the enzymatic machinery that copies DNA each time a cell divides makes "errors" at a relatively high rate in regard to the number of repeats. Hence, numerous alleles usually occur at a microsatellite locus, with each allele differing in the number of repeats of the microsatellite repeat motif (e.g., GA8 vs. GA12). Microsatellites are transformed into genetic markers by designing PCR primers specific to the (hopefully) unique sequences flanking the microsatellite repeat. They are particularly useful for discriminating among individuals within a population ("genetic fingerprinting" or "paternity analysis") or for determining the (unknown) population of origin of an individual.
+- id: "phenotype"
+  order: 8
+  term: "Phenotype"
+  definition: |-
+    A measurable or observable characteristic of an individual organism, resulting from the combined influence of the individual's genotype (genetic makeup) and the environment in which they reside. Example phenotypes in maize are 'plant height' or 'kernel color'.
+- id: "quantitative-trait"
+  order: 9
+  term: "Quantitative trait"
+  definition: |-
+    A continuously varying, measurable character, affected by the variation present in one to numerous genes in combination with environmental variation.
+- id: "recombination-recombinant"
+  order: 10
+  term: "Recombination/Recombinant"
+  definition: |-
+    Recombination is a biological process that results in the shuffling of genetic material between two parental chromosomes before a new, 'recombinant' chromosome is passed on to offspring. In diploid organisms (such as maize and humans), each individual carries two copies of each chromosome, one that they inherited from their maternal parent, and one from their paternal parent. Production of gametes (pollen or egg cells) involves a process called 'meiosis', during which the two copies of each chromosome pair up, and through a process called 'crossing over', exchange genetic material. Essentially, wherever there is a cross-over, the DNA from one copy of the chromosome is broken and spliced onto the DNA from the other chromosome, in such a manner that the original order of genes along the chromosome is retained. For example, if we represent one of the maternal chromosomes as:
+    
+    M1M2M3M4M5M6M7M8M9M10M11M12M13M14M15M16M17M18M19M20
+    
+    and the corresponding paternal chromosome as:
+    
+    P1P2P3P4P5P6P7P8P9P10P11P12P13P14P15P16P17P18P19P20
+    
+    with the numbers representing genes, a recombinant chromosome might look like this:
+    
+    M1M2M3M4P5P6P7P8P9P10P11P12P13P14M15M16M17M18M19M20
+    
+    In this example, two cross-overs, or 'recombinant breakpoints' have occurred between the parental chromosomes. Just where a recombination will occur along a chromosome is mostly (but not completely) a matter of chance. Hence, genes (or genetic markers) located close together on a chromosome are less likely to have a recombinat breakpoint between them compared to genes (or genetic markers) far apart. This phenomenon is exploited by geneticists to determine the order and relative postions of genes or genetic markers on a genetic map, as well as for QTL mapping. The distance between genes or genetic markers along a genetic map of a chromosome, in terms of recombination frequency, is reported in centiMorgans (cM). A genetic distance of 1 cM between two loci indicates that there is a one percent probability that a recombination event will occur between the two loci in any given meiosis.
+- id: "segregation-segregate"
+  order: 11
+  term: "Segregation/Segregate"
+  definition: |-
+    When a diploid organism (such as maize or humans) carries two different alleles at a gene or locus, just which one will be passed on to an offspring is a matter of chance, with a 50% chance of either allele being passed on. Such "heterozygous" genes in an individual (those genes with two different alleles) are thus said to "segregate" among its offspring. Two alleles at two different loci that are located close together on a chromosome will tend to "co-segregate" among the offspring of that individual. This means that the two alleles will tend to occur together in the offspring, as a result of the low chance of a recombination occuring between them. Observation of the degree of co-segregation of alleles at different loci allows geneticists to determine the relative positions of the loci on a genetic map of the chromosomes.

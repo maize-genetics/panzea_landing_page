@@ -1,0 +1,51 @@
+year: 2019
+entries:
+  - authors: "Anderson SN, Stitzer MC, Brohammer AB, Zhou P, Noshay JM, Hirsch CD, Ross-Ibarra J, Hirsch CD, and Springer NM"
+    title: "Transposable elements contribute to dynamic genome content in maize."
+    citation: "bioRxiv"
+    doi: "10.1101/547398"
+    links:
+      - label: "Link"
+        href: "https://www.biorxiv.org/content/10.1101/547398v1"
+  - authors: "Anderson SN, Stitzer MC, Zhou P, Ross-Ibarra J, Hirsch CD, and Springer NM"
+    title: "Dynamic patterns of transcript abundance of transposable element families in maize."
+    citation: "bioRxiv"
+    doi: "10.1101/668558"
+    links:
+      - label: "Link"
+        href: "https://www.biorxiv.org/content/10.1101/668558v1"
+  - authors: "Josephs EB, Berg JJ, Ross-Ibarra J and Coop G"
+    title: "Detecting adaptive differentiation in structured populations with genomic data and common gardens."
+    citation: "Genetics 212 (3): 5643-5652."
+    doi: "10.1534/genetics.118.301786"
+    links:
+      - label: "Link"
+        href: "https://www.genetics.org/content/early/2019/01/24/genetics.118.301786.supplemental?versioned=true"
+  - authors: "Torres R, Stetter MG, Hernandez RD, and Ross-Ibarra J"
+    title: "The temporal dynamics of background selection in non-equilibrium populations."
+    citation: "bioRxiv"
+    doi: "10.1101/618389"
+    links:
+      - label: "Link"
+        href: "https://www.biorxiv.org/content/10.1101/618389v1"
+  - authors: "Xue W, Anderson SN, Wang X, Yang L, Crisp PA, Li Q, Noshay J, Albert PS, Birchler JA, Bilinski P, Stitzer MC, Ross-Ibarra J, Flint-Garcia S, Chen X, Springer NM, and Doebley JF"
+    title: "Hybrid decay: a transgenerational epigenetic decline in vigor and viability triggered in backcross populations of teosinte with maize."
+    citation: "Genetics 212(3)"
+    doi: "10.1534/genetics.119.302378"
+    links:
+      - label: "Link"
+        href: "https://www.genetics.org/content/early/2019/07/18/genetics.119.302378"
+  - authors: "Yang CJ, Samayoa LF, Bradbury PJ, Olukolu BA, Xue W, York AM, Tuholski MR, Wang W, Daskalska LL, Neumeyer MA, Sanchez-Gonzalez JDJ, Romay MC, Glaubitz JC, Sun Q, Buckler ES, Holland JB, Doebley JF"
+    title: "The genetic architecture of teosinte catalyzed and constrained maize domestication."
+    citation: "PNAS 116 (12): 5643-5652. doi: doi.org/10.1073/pnas.1820997116."
+    doi: "10.1073/pnas.1820997116"
+    links:
+      - label: "Link"
+        href: "https://www.pnas.org/content/116/12/5643.abstract"
+  - authors: "Zhou S, Kremling K, Bandillo N, Richter A, Zhang YK, Ahern KR, Artyukhin AB, Hui JX, Younkin GC, Schroeder FC, Buckler ES, Jander G"
+    title: "Metabolome-scale genome-wide association studies reveal chemical diversity and genetic control of maize specialized metabolites."
+    citation: "The Plant Cell 31(5): 937-955 doi: doi.org/10.1105/tpc.18.00772"
+    doi: "10.1105/tpc.18.00772"
+    links:
+      - label: "Link"
+        href: "http://www.plantcell.org/content/31/5/937"

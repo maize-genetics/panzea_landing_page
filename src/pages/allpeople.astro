@@ -1,0 +1,71 @@
+---
+import PeopleGrid from '../components/PeopleGrid.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { allPeople } from '../lib/people';
+import { url } from '../lib/url';
+
+const people = await allPeople();
+
+const groups = [
+  { id: 'pi', label: 'Principal Investigators', href: '/pis' },
+  { id: 'postdoc', label: 'Postdoctoral Associates', href: '/post-docs' },
+  { id: 'grad', label: 'Graduate Students', href: '/grad-students' },
+  { id: 'staff', label: 'Staff', href: '/staff' },
+  { id: 'former', label: 'Former Members', href: '/former-people' },
+];
+---
+
+<BaseLayout title="Project members" description="The people who contributed to the Panzea maize diversity project.">
+  <p class="lede">
+    These are the people whose work in some way contributed to the Panzea project; many
+    were supported by other sources including significant USDA-ARS support, Cold Spring
+    Harbor Laboratory, Cornell University, North Carolina State University, University of
+    California-Davis, University of Missouri-Columbia, the University of Wisconsin-Madison
+    and various other federal, state, and private grant sources.
+  </p>
+
+  <nav class="filters" aria-label="People by role">
+    <ul>
+      {
+        groups.map((g) => (
+          <li>
+            <a href={url(g.href)}>{g.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <PeopleGrid people={people} />
+</BaseLayout>
+
+<style>
+  .filters ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0 0 2rem;
+  }
+
+  .filters a {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  .filters a:hover {
+    background: var(--gold-100);
+    border-color: var(--gold-500);
+  }
+
+  .lede {
+    max-width: var(--measure);
+  }
+</style>

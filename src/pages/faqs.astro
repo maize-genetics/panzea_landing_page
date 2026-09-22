@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { md } from '../lib/markdown';
+import { url } from '../lib/url';
+
+// `order` carries the sequence the questions appeared in on the old site.
+const items = (await getCollection('faqs')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Panzea FAQs"
+  description="Answers to common questions about maize diversity, teosinte, SNPs, QTL mapping and the Panzea project."
+>
+  <nav class="toc" aria-label="Questions">
+    <ol>
+      {
+        items.map((item) => (
+          <li>
+            <a href={`#${item.data.id}`}>{item.data.question}</a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  {
+    items.map((item) => (
+      <section class="faq">
+        <h2 id={item.data.id}>{item.data.question}</h2>
+        <div class="prose" set:html={md(item.data.answer)} />
+      </section>
+    ))
+  }
+
+  <p class="more">
+    See also the <a href={url('/glossary')}>glossary of genetics terms</a>.
+  </p>
+</BaseLayout>
+
+<style>
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.4rem;
+    margin-bottom: 2.5rem;
+    max-width: var(--measure);
+  }
+
+  .toc ol {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .toc li + li {
+    margin-top: 0.3rem;
+  }
+
+  .faq {
+    margin-bottom: 2.25rem;
+  }
+
+  .faq h2 {
+    scroll-margin-top: 6rem;
+    font-size: var(--step-2);
+  }
+
+  .more {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+</style>

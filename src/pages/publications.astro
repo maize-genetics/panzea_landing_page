@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import PublicationEntry from '../components/PublicationEntry.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+
+// The old site split publications across two pages at 2009; keep that split so
+// both URLs keep working, and link them together.
+const RECENT_FROM = 2009;
+
+const years = (await getCollection('publications'))
+  .filter((y) => y.data.year >= RECENT_FROM)
+  .sort((a, b) => b.data.year - a.data.year);
+
+const total = years.reduce((n, y) => n + y.data.entries.length, 0);
+---
+
+<BaseLayout
+  title="Publications"
+  description={`${total} peer-reviewed publications from the Panzea maize diversity project, 2009 onwards.`}
+>
+  <p class="lede">
+    {total} publications from {RECENT_FROM} onwards. Earlier work is listed under{' '}
+    <a href={url('/publications-2002-earlier')}>2008 and earlier</a>.
+  </p>
+
+  <nav class="jump" aria-label="Jump to year">
+    <ul>
+      {
+        years.map((y) => (
+          <li>
+            <a href={`#${y.data.year}`}>{y.data.year}</a>
+          </li>
+        ))
+      }
+      <li>
+        <a href={url('/publications-2002-earlier')}>2008 &amp; earlier</a>
+      </li>
+    </ul>
+  </nav>
+
+  {
+    years.map((y) => (
+      <section class="year" aria-labelledby={`h-${y.data.year}`}>
+        <h2 id={y.data.year.toString()}>
+          <span id={`h-${y.data.year}`}>{y.data.year}</span>
+        </h2>
+        <ol class="entries">
+          {y.data.entries.map((entry) => (
+            <PublicationEntry entry={entry} />
+          ))}
+        </ol>
+      </section>
+    ))
+  }
+</BaseLayout>
+
+<style>
+  .lede {
+    max-width: var(--measure);
+  }
+
+  .jump ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0;
+    margin: 0 0 2rem;
+  }
+
+  .jump a {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .jump a:hover {
+    background: var(--gold-100);
+    border-color: var(--gold-500);
+  }
+
+  .year {
+    margin-bottom: 2.5rem;
+  }
+
+  .year h2 {
+    scroll-margin-top: 6rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 3px solid var(--gold-300);
+  }
+
+  .entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>

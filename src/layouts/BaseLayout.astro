@@ -1,0 +1,74 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import site from '../data/site.json';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Omit the default page heading when the page renders its own hero. */
+  bare?: boolean;
+}
+
+const { title, description = site.description, bare = false } = Astro.props;
+const pageTitle = title === site.title ? site.title : `${title} | ${site.title}`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
+    <link
+      rel="preload"
+      href={`${import.meta.env.BASE_URL}fonts/jockey-one-latin.woff2`}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <Header />
+    <main id="main" tabindex="-1">
+      {
+        bare ? (
+          <slot />
+        ) : (
+          <div class="wrap page">
+            <h1>{title}</h1>
+            <slot />
+          </div>
+        )
+      }
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main {
+    flex: 1;
+  }
+
+  main:focus {
+    outline: none;
+  }
+
+  .page {
+    padding-block: clamp(1.75rem, 4vw, 3rem) clamp(2.5rem, 6vw, 4rem);
+  }
+</style>

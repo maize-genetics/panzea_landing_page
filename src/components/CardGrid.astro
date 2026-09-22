@@ -1,0 +1,99 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { mdInline } from '../lib/markdown';
+import { isExternal, url } from '../lib/url';
+
+interface Props {
+  cards: { title: string; href: string; text?: string; image?: ImageMetadata }[];
+}
+
+const { cards } = Astro.props;
+---
+
+<ul class="cards">
+  {
+    cards.map((card) => (
+      <li class="card">
+        <a href={url(card.href)} rel={isExternal(card.href) ? 'noopener' : undefined}>
+          {card.image && (
+            <Image
+              src={card.image}
+              alt=""
+              widths={[400, 800]}
+              sizes="(min-width: 60rem) 22rem, 100vw"
+            />
+          )}
+          <span class="label">
+            {card.title}
+            {isExternal(card.href) && <span aria-hidden="true"> ↗</span>}
+          </span>
+        </a>
+        {card.text && <p set:html={mdInline(card.text)} />}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .cards {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+
+  .card:has(a:hover),
+  .card:has(a:focus-visible) {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .card > a {
+    text-decoration: none;
+    display: block;
+  }
+
+  .card :global(img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: var(--gold-100);
+  }
+
+  .label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    color: var(--brown-700);
+    padding: 0.85rem 1.1rem 0;
+  }
+
+  .card > a:hover .label {
+    color: var(--green-700);
+    text-decoration: underline;
+  }
+
+  .card p {
+    margin: 0.45rem 0 0;
+    padding: 0 1.1rem 1.2rem;
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+  }
+</style>

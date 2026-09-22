@@ -1,0 +1,116 @@
+---
+import { url } from '../lib/url';
+
+interface Props {
+  entry: {
+    authors: string;
+    title: string;
+    citation: string;
+    doi: string;
+    pdf?: string;
+    links: { label: string; href: string }[];
+  };
+}
+
+const { entry } = Astro.props;
+const doiHref = entry.doi ? `https://doi.org/${entry.doi}` : null;
+---
+
+<li class="pub">
+  <p class="title">{entry.title}</p>
+  {entry.authors && <p class="authors">{entry.authors}</p>}
+  {entry.citation && <p class="citation">{entry.citation}</p>}
+  <p class="links">
+    {
+      entry.pdf && (
+        <a class="chip pdf" href={url(`/files/publications/${entry.pdf}`)}>
+          PDF
+        </a>
+      )
+    }
+    {
+      doiHref && (
+        <a class="chip" href={doiHref} rel="noopener">
+          doi:{entry.doi}
+        </a>
+      )
+    }
+    {
+      entry.links.map((link) => (
+        <a class="chip" href={link.href} rel="noopener">
+          {link.label}
+        </a>
+      ))
+    }
+  </p>
+</li>
+
+<style>
+  .pub {
+    padding: 1rem 0 1.1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pub:last-child {
+    border-bottom: 0;
+  }
+
+  .title {
+    margin: 0 0 0.2rem;
+    font-weight: 600;
+    color: var(--brown-700);
+    font-size: 1.02rem;
+    line-height: 1.4;
+  }
+
+  .authors,
+  .citation {
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .citation {
+    font-style: italic;
+  }
+
+  .links {
+    margin: 0.5rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .links:empty {
+    display: none;
+  }
+
+  .chip {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--green-700);
+  }
+
+  .chip:hover {
+    background: var(--gold-100);
+    border-color: var(--gold-500);
+  }
+
+  .chip.pdf {
+    background: var(--green-700);
+    border-color: var(--green-700);
+    color: #fff;
+  }
+
+  .chip.pdf:hover {
+    background: var(--green-600);
+    border-color: var(--green-600);
+  }
+</style>

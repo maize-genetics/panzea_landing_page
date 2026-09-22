@@ -1,0 +1,95 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import GroupListing from '../components/GroupListing.astro';
+import PageBody from '../components/PageBody.astro';
+import PersonProfile from '../components/PersonProfile.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { LABS, LAB_EXTRAS, ROLE_PAGES } from '../lib/groups';
+
+// Prose pages, people bios and roster listings all live at the site root on the
+// old site, so one dynamic route serves them all and every legacy URL survives.
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  const people = (await getCollection('people')).sort((a, b) =>
+    a.data.name.localeCompare(b.data.name),
+  );
+
+  const pageRoutes = pages
+    .filter((page) => page.id !== 'home')
+    .map((page) => ({ params: { slug: page.id }, props: { kind: 'page' as const, page } }));
+
+  // Everyone gets a profile page, including the handful whose Wix page held only
+  // a photo, so no inbound link to a person URL breaks.
+  const personRoutes = people.map((person) => ({
+    params: { slug: person.id },
+    props: { kind: 'person' as const, person },
+  }));
+
+  const roleRoutes = ROLE_PAGES.map((role) => ({
+    params: { slug: role.slug },
+    props: {
+      kind: 'group' as const,
+      title: role.title,
+      members: people.filter((p) => p.data.groups.includes(role.group)),
+      extras: [] as string[],
+    },
+  }));
+
+  const labRoutes = LABS.map((lab) => ({
+    params: { slug: lab.slug },
+    props: {
+      kind: 'group' as const,
+      title: `${lab.name} Members`,
+      members: people.filter((p) => p.data.labs.includes(lab.id)),
+      extras: LAB_EXTRAS[lab.id] ?? [],
+    },
+  }));
+
+  return [...pageRoutes, ...personRoutes, ...roleRoutes, ...labRoutes];
+}
+
+type Props =
+  | { kind: 'page'; page: CollectionEntry<'pages'> }
+  | { kind: 'person'; person: CollectionEntry<'people'> }
+  | {
+      kind: 'group';
+      title: string;
+      members: CollectionEntry<'people'>[];
+      extras: string[];
+    };
+
+const props = Astro.props as Props;
+
+const title =
+  props.kind === 'page'
+    ? props.page.data.title
+    : props.kind === 'person'
+      ? props.person.data.name
+      : props.title;
+
+const description =
+  props.kind === 'page'
+    ? props.page.data.description
+    : props.kind === 'person'
+      ? [props.person.data.role, ...props.person.data.affiliation].filter(Boolean).join(', ')
+      : `${props.title} on the Panzea maize diversity project.`;
+---
+
+<BaseLayout title={title} description={description} bare>
+  <div class="wrap page">
+    <h1>{title}</h1>
+    {props.kind === 'page' && <PageBody page={props.page} />}
+    {props.kind === 'person' && <PersonProfile person={props.person} />}
+    {
+      props.kind === 'group' && (
+        <GroupListing title={props.title} members={props.members} extras={props.extras} />
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block: clamp(1.75rem, 4vw, 3rem) clamp(2.5rem, 6vw, 4rem);
+  }
+</style>

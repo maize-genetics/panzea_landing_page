@@ -1,0 +1,89 @@
+---
+import { Image } from 'astro:assets';
+import { render, type CollectionEntry } from 'astro:content';
+import Callout from './Callout.astro';
+import CardGrid from './CardGrid.astro';
+import Gallery from './Gallery.astro';
+import YouTube from './YouTube.astro';
+import { url } from '../lib/url';
+
+interface Props {
+  page: CollectionEntry<'pages'>;
+}
+
+const { page } = Astro.props;
+const { title, hero, heroCaption, retiredTool, cards, gallery } = page.data;
+const { Content } = await render(page);
+
+// The old site embedded the project's "Why I like being a scientist" video on
+// these two pages; the Wix iframe becomes a click-to-load player.
+const VIDEOS: Record<string, { id: string; title: string }> = {
+  'careers-in-science': { id: '6lXkmcnUxNc', title: 'Why I like being a scientist' },
+  'for-the-general-public': { id: '6lXkmcnUxNc', title: 'Why I like being a scientist' },
+};
+const video = VIDEOS[page.id];
+---
+
+{
+  hero && (
+    <figure class="hero">
+      <Image
+        src={hero}
+        alt=""
+        widths={[720, 1200]}
+        sizes="(min-width: 60rem) 48rem, 100vw"
+        loading="eager"
+      />
+      {heroCaption && <figcaption>{heroCaption}</figcaption>}
+    </figure>
+  )
+}
+
+<div class="prose"><Content /></div>
+
+{video && <YouTube id={video.id} title={video.title} />}
+
+{
+  retiredTool && (
+    <Callout title="This search tool has been retired" tone="notice">
+      <p>
+        The interactive genotype search ran on a Cornell server that no longer responds.
+        The same data is still published as flat files: see{' '}
+        <a href={url('/genotypes')}>Genotypes</a>, <a href={url('/phenotypes')}>Phenotypes</a>
+        , and the{' '}
+        <a
+          href="http://cbsusrv04.tc.cornell.edu/users/panzea/filegateway.aspx?category=Genotypes"
+          rel="noopener"
+        >
+          Panzea file gateway
+        </a>
+        .
+      </p>
+    </Callout>
+  )
+}
+
+{cards.length > 0 && <CardGrid cards={cards} />}
+{gallery.length > 0 && <Gallery images={gallery} label={`${title} photos`} />}
+
+<style>
+  .hero {
+    margin: 0 0 2rem;
+    max-width: 48rem;
+  }
+
+  .hero :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  figcaption {
+    margin-top: 0.6rem;
+    color: var(--ink-muted);
+    font-size: 0.9rem;
+    max-width: var(--measure);
+  }
+</style>

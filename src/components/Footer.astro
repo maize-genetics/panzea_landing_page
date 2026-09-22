@@ -1,0 +1,83 @@
+---
+import site from '../data/site.json';
+import { md } from '../lib/markdown';
+import { url } from '../lib/url';
+
+const quickLinks = [
+  { label: 'About us', href: '/about_us' },
+  { label: 'Data', href: '/data' },
+  { label: 'Education and Outreach', href: '/education-and-outreach' },
+  { label: 'People', href: '/allpeople' },
+  { label: 'Publications', href: '/publications' },
+  { label: 'Contact Us', href: '/contact-us' },
+];
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav class="quick" aria-label="Footer">
+      <ul>
+        {
+          quickLinks.map((l) => (
+            <li>
+              <a href={url(l.href)}>{l.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="notes">
+      {site.footerNotes.map((note) => <div class="note" set:html={md(note)} />)}
+    </div>
+
+    <p class="colophon">
+      &copy; {new Date().getFullYear()} Panzea &mdash; The Maize Diversity Project
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: auto;
+    background: var(--brown-900);
+    color: #e9e2d0;
+    padding: 2.5rem 0 2rem;
+    font-size: 0.925rem;
+  }
+
+  .quick ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.4rem;
+    margin: 0 0 1.5rem;
+    padding: 0;
+  }
+
+  /* :global reaches the links inside the Markdown-rendered footer notes. */
+  .site-footer :global(a) {
+    color: #f3dba3;
+  }
+
+  .site-footer :global(a:hover) {
+    color: #fff;
+  }
+
+  .notes {
+    display: grid;
+    gap: 1rem;
+    max-width: 80ch;
+  }
+
+  .note :global(p) {
+    margin: 0;
+  }
+
+  .colophon {
+    margin: 1.75rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgb(243 219 163 / 25%);
+    color: #c9c0aa;
+  }
+</style>

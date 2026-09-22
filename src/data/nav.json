@@ -1,0 +1,118 @@
+[
+  {
+    "label": "Home",
+    "href": "/"
+  },
+  {
+    "label": "About us",
+    "href": "/about_us",
+    "children": [
+      {
+        "label": "History of Panzea",
+        "href": "/history-of-panzea"
+      },
+      {
+        "label": "Current Project",
+        "href": "/current-project"
+      },
+      {
+        "label": "News",
+        "href": "/news"
+      },
+      {
+        "label": "Contact Us",
+        "href": "/contact-us"
+      }
+    ]
+  },
+  {
+    "label": "Data",
+    "href": "/data",
+    "children": [
+      {
+        "label": "Genotypes",
+        "href": "/genotypes"
+      },
+      {
+        "label": "Sequence Data",
+        "href": "http://cbsusrv04.tc.cornell.edu/users/panzea/filegateway.aspx?category=Sequences"
+      },
+      {
+        "label": "Genome Annotations",
+        "href": "http://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=26"
+      },
+      {
+        "label": "Phenotypes",
+        "href": "/phenotypes"
+      },
+      {
+        "label": "GWAS Results",
+        "href": "/gwas-results"
+      },
+      {
+        "label": "RNAseq Data",
+        "href": "http://cbsusrv04.tc.cornell.edu/users/panzea/filegateway.aspx?category=RNAseq"
+      },
+      {
+        "label": "Collaborators\u2019 Data",
+        "href": "/collaborators"
+      }
+    ]
+  },
+  {
+    "label": "Education and Outreach",
+    "href": "/education-and-outreach",
+    "children": [
+      {
+        "label": "Museum Exhibit",
+        "href": "/museum-exhibit"
+      },
+      {
+        "label": "For the General Public",
+        "href": "/for-the-general-public"
+      },
+      {
+        "label": "For Teachers",
+        "href": "/for-teachers"
+      },
+      {
+        "label": "Careers in Science",
+        "href": "/careers-in-science"
+      },
+      {
+        "label": "Women in Science",
+        "href": "/women-in-science"
+      },
+      {
+        "label": "Resources",
+        "href": "/resources"
+      },
+      {
+        "label": "Maize Mazes",
+        "href": "/maize-mazes"
+      },
+      {
+        "label": "For Researchers",
+        "href": "/for-researchers"
+      }
+    ]
+  },
+  {
+    "label": "FAQs",
+    "href": "/faqs",
+    "children": [
+      {
+        "label": "Glossary",
+        "href": "/glossary"
+      }
+    ]
+  },
+  {
+    "label": "People",
+    "href": "/allpeople"
+  },
+  {
+    "label": "Publications",
+    "href": "/publications"
+  }
+]

@@ -1,0 +1,109 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PeopleGrid from './PeopleGrid.astro';
+import { LABS, ROLE_PAGES } from '../lib/groups';
+import { url } from '../lib/url';
+
+interface Props {
+  title: string;
+  members: CollectionEntry<'people'>[];
+  extras?: string[];
+}
+
+const { title, members, extras = [] } = Astro.props;
+
+const siblings = [
+  ...ROLE_PAGES.map((r) => ({ slug: r.slug, label: r.title })),
+  ...LABS.map((l) => ({ slug: l.slug, label: l.name })),
+].filter((s) => !title.startsWith(s.label));
+---
+
+<p class="lede">
+  Part of the <a href={url('/allpeople')}>Panzea project team</a>.
+</p>
+
+<PeopleGrid people={members} />
+
+{
+  extras.length > 0 && (
+    <section class="extras">
+      <h2>Also in this lab</h2>
+      <p class="hint">These members do not have a profile page on the site.</p>
+      <ul>
+        {extras.map((name) => (
+          <li>{name}</li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<nav class="siblings" aria-label="Other groups">
+  <h2>Other groups</h2>
+  <ul>
+    {
+      siblings.map((s) => (
+        <li>
+          <a href={url(`/${s.slug}`)}>{s.label}</a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .lede {
+    max-width: var(--measure);
+  }
+
+  .extras {
+    margin-top: 2.5rem;
+  }
+
+  .extras h2 {
+    font-size: var(--step-2);
+  }
+
+  .hint {
+    color: var(--ink-muted);
+    font-size: 0.93rem;
+  }
+
+  .extras ul {
+    max-width: 34rem;
+  }
+
+  .siblings {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .siblings h2 {
+    font-size: var(--step-1);
+  }
+
+  .siblings ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0;
+  }
+
+  .siblings a {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .siblings a:hover {
+    background: var(--gold-100);
+    border-color: var(--gold-500);
+  }
+</style>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Panzea">
+  <rect width="32" height="32" rx="6" fill="#f3dba3"/>
+  <path d="M16 27c0-8.5 3.6-14.6 10.5-17.6C26 18 22.4 24 16 27Z" fill="#457b21"/>
+  <path d="M16 27C16 18.5 12.4 12.4 5.5 9.4 6 18 9.6 24 16 27Z" fill="#54a53c"/>
+  <rect x="15" y="16" width="2" height="11" rx="1" fill="#33280f"/>
+</svg>

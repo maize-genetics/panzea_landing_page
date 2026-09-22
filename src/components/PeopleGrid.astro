@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PersonCard from './PersonCard.astro';
+
+interface Props {
+  people: CollectionEntry<'people'>[];
+}
+
+const { people } = Astro.props;
+---
+
+<ul class="grid">
+  {people.map((person) => <PersonCard person={person} />)}
+</ul>
+
+<style>
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+  }
+</style>

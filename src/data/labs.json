@@ -1,0 +1,40 @@
+{
+  "labs": [
+    {
+      "id": "buckler",
+      "name": "Buckler Lab",
+      "slug": "buckler-lab-members"
+    },
+    {
+      "id": "doebley",
+      "name": "Doebley Lab",
+      "slug": "doebly-lab-members"
+    },
+    {
+      "id": "flint-garcia",
+      "name": "Flint-Garcia Lab",
+      "slug": "flint-garcia-lab-members"
+    },
+    {
+      "id": "ware",
+      "name": "Ware Lab",
+      "slug": "ware-lab-members"
+    }
+  ],
+  "extraMembers": {
+    "buckler": [
+      "Janu Verma",
+      "Ramu Panna",
+      "Charlotte Acharya"
+    ],
+    "doebley": [
+      "Zak Lemmon",
+      "Ali Torno"
+    ],
+    "ware": [
+      "Andrew Olsen",
+      "Liya Wang",
+      "Jerry Lu"
+    ]
+  }
+}
