@@ -38,7 +38,7 @@ src/content/
   glossary.yaml            the glossary, in display order
 src/data/
   nav.json                 the header menu tree
-  site.json                site title, logo, footer notes
+  site.json                site title, tagline, footer notes
   labs.json                lab names and members without profile pages
 src/assets/                images, optimised at build time by astro:assets
 public/files/publications/ publication PDFs, served as-is
