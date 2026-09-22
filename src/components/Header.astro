@@ -1,6 +1,5 @@
 ---
-import { Image } from 'astro:assets';
-import logo from '../assets/brand/logo.png';
+import Logo from '../assets/brand/logo.svg';
 import nav from '../data/nav.json';
 import { isCurrent, isExternal, url } from '../lib/url';
 
@@ -17,7 +16,7 @@ const active = (item: NavItem) =>
 <header class="site-header">
   <div class="wrap bar">
     <a class="brand" href={url('/')}>
-      <Image src={logo} alt="" width={40} height={44} loading="eager" />
+      <Logo width={40} height={44} aria-hidden="true" />
       <span class="wordmark">panzea</span>
     </a>
 

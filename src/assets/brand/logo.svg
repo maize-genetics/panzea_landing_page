@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 98" role="img" aria-label="Panzea">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 98" width="90" height="98" role="img" aria-label="Panzea leaf mark">
   <defs>
     <linearGradient id="pz-leaf" x1="4%" y1="18%" x2="88%" y2="82%">
       <stop offset="0" stop-color="#93c944"/>
@@ -22,8 +22,12 @@
   <g clip-path="url(#pz-clip)">
     <rect width="90" height="98" fill="url(#pz-leaf)"/>
     <rect width="90" height="98" fill="url(#pz-glow)"/>
+    <!-- Darker shading along the long upper-right edge. -->
     <path d="M17.6 10.4C18.6 10.4 19.2 12.9 22 15c2.8 2.1 7.2 5.3 12.4 8 5.3 2.7 13.5 5.3 19.2 8 5.8 2.7 11.8 5.3 15.5 8 3.7 2.7 5.3 5.3 6.8 8l-4.6 3.4C67.6 39.6 52 31.6 38 25.2 24 18.8 16.4 15.8 13.4 14.8Z" fill="url(#pz-rim)"/>
+
+    <!-- Upper vein: a long sliver from the tip down to the middle of the leaf. -->
     <path fill="#ffffff" d="M29.2 30.2 58.6 47.4 56.8 50.6 28.2 31.8Z"/>
+    <!-- Lower veins: a wedge opening to the left, then the midrib running to the lower right. -->
     <path fill="#ffffff" d="M30.2 45.6 46.5 42.4 49.4 47.6 64.6 72.4 59.6 66.2 45.4 52.6Z"/>
   </g>
 </svg>
