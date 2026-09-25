@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Feature from '../components/outreach/Feature.astro';
+import OutreachNav from '../components/outreach/OutreachNav.astro';
+import PillLink from '../components/outreach/PillLink.astro';
+import Section from '../components/outreach/Section.astro';
+import aerial from '../assets/pages/maize-mazes-1.jpg';
+
+const MAZES = [
+  { name: 'Schuyler Farm', place: 'Upstate NY', href: 'http://www.schuylerfarms.com/' },
+  { name: 'Stoughton Farm Maize Maze', place: 'Newark Valley, NY', href: 'http://www.stoughtonfarm.com/' },
+  { name: 'Rio Grande 8-acre maize maze', place: 'Albuquerque, NM', href: 'http://riograndefarm.org/events/maize-maze/' },
+  { name: 'Iowa Maize Maze', place: 'Elgin, IA', href: 'http://www.iowamaizemaze.org/' },
+  { name: 'Maize Adventure', place: 'Archdale, NC', href: 'http://maizeadventure.com/' },
+  { name: 'Blowing Springs Farm Amaizing Maze', place: 'Chattanooga, GA', href: 'http://www.blowingspringsfarm.com/' },
+];
+---
+
+<BaseLayout
+  title="Maize Mazes"
+  description="Corn mazes to visit around the United States, from upstate New York to New Mexico."
+>
+  <Feature
+    id="mazes"
+    image={aerial}
+    alt="Aerial view of a corn maze cut into the shape of a handshake with the words Bully Free Zone and Bullying Hurts"
+    eyebrow="Get lost in maize"
+    title="Corn mazes to visit"
+    eager
+  >
+    <p>
+      Walking a maze cut through a field of maize is a fun way to see the crop up close. Here are
+      some mazes around the U.S.
+    </p>
+    <Fragment slot="actions">
+      <PillLink
+        href="http://www.newyorkupstate.com/outdoors/2015/09/10_corn_mazes_in_upstate_ny_where_youll_have_fun_getting_lost.html"
+      >
+        10 corn mazes in upstate NY
+      </PillLink>
+    </Fragment>
+  </Feature>
+
+  <Section id="list" title="Mazes around the U.S.">
+    <ul class="mazes">
+      {
+        MAZES.map((m) => (
+          <li>
+            <span class="place">{m.place}</span>
+            <a href={m.href} rel="noopener">
+              {m.name} <span aria-hidden="true">↗</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <OutreachNav current="/maize-mazes" />
+</BaseLayout>
+
+<style>
+  .mazes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(0.75rem, 2vw, 1rem);
+  }
+
+  @media (min-width: 32rem) {
+    .mazes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 52rem) {
+    .mazes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .mazes li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.95rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition:
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+
+  .mazes li:has(a:hover),
+  .mazes li:has(a:focus-visible) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .place {
+    align-self: flex-start;
+    padding: 0.05rem 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--brown-700);
+    background: var(--gold-100);
+    border: 1px solid var(--gold-300);
+    border-radius: 999px;
+  }
+
+  .mazes a {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    text-decoration: none;
+  }
+
+  .mazes a:hover {
+    text-decoration: underline;
+  }
+</style>

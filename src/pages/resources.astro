@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LinkList from '../components/outreach/LinkList.astro';
+import OutreachNav from '../components/outreach/OutreachNav.astro';
+import Section from '../components/outreach/Section.astro';
+
+const YOUTUBE_CHANNEL = 'https://www.youtube.com/channel/UCS1SdXlyMI1OsSf5yA_oFqw';
+
+const VIDEOS = [
+  {
+    label: 'Why I like being a scientist',
+    href: 'https://www.youtube.com/watch?v=6lXkmcnUxNc',
+    note: 'Our team members on why they love their jobs.',
+    meta: '8 min',
+  },
+  {
+    label: 'Why I like being a scientist (short version)',
+    href: 'https://www.youtube.com/watch?v=LyFJ9HL0Llo',
+    meta: '3 min',
+  },
+  {
+    label: 'Manual Corn Pollination',
+    href: 'https://www.youtube.com/watch?v=GHHLjmzAxj4&list=PLBpYiVDfTq1ZQmfl1q_v1dmRid-vPw_ZX&index=1',
+    note: 'PI Sherry Flint-Garcia demonstrates hand pollination, in a video produced by MizzouCAFNR.',
+  },
+  {
+    label: 'Popped Secret: The Mysterious Origins of Corn',
+    href: 'https://www.youtube.com/watch?v=mBuYUb_mFXA&list=PLBpYiVDfTq1ZQmfl1q_v1dmRid-vPw_ZX&index=2',
+    note: 'Featuring our own John Doebley.',
+  },
+  {
+    label: 'Secrets of Plant Genomes Revealed!',
+    href: 'http://www.nsf.gov/news/mmg/mmg_disp.jsp?med_id=61504',
+    note: 'Members of our group star in this National Science Foundation video.',
+    meta: 'NSF',
+  },
+  {
+    label: 'The Love Life of Plants',
+    href: 'http://www.gatesnotes.com/Development/Love-Life-of-Plants-Cornell-University',
+    note: 'An article and video Bill Gates wrote after visiting Cornell.',
+    meta: 'Gates Notes',
+  },
+  {
+    label: 'Giant Views Videos',
+    href: 'http://seedworld.com/giant-views-videos/',
+    note: 'A great interview series from Seed World.',
+    meta: 'Seed World',
+  },
+  {
+    label: 'Jim Holland on bringing biodiversity back to US corn',
+    href: 'http://seedworld.com/dr-jim-holland-usda-ars-ncsu-corn-genetic-diversity-dna-sequencing-fusarium-resistance/',
+    note: 'PI Jim Holland in the Giant Views series.',
+    meta: 'Seed World',
+  },
+  {
+    label: 'Michael Gore on biofortification',
+    href: 'http://seedworld.com/dr-michael-gore-cornell-improving-nutritional-content-biofortification-guayule-rubber/',
+    note: 'Panzea alumnus Michael Gore on biofortification of maize and other key crops.',
+    meta: 'Seed World',
+  },
+  {
+    label: 'Maize time-lapse video',
+    href: 'http://www.weedtowonder.org/',
+    note: 'Watch maize plants grow at Weed to Wonder.',
+  },
+];
+
+const SITES = [
+  {
+    label: 'Weed to Wonder',
+    href: 'http://www.weedtowonder.org/',
+    note: 'How humans changed corn and how corn changed human society.',
+  },
+  {
+    label: 'Genomic & Open-source Breeding Informatics Initiative (GOBii)',
+    href: 'http://cbsugobii05.tc.cornell.edu/wordpress/',
+  },
+  { label: 'HarvestPlus', href: 'http://www.harvestplus.org/' },
+  { label: 'Crop Trust', href: 'https://www.croptrust.org/' },
+  {
+    label: 'Know Your Farmer, Know Your Food',
+    href: 'http://www.usda.gov/wps/portal/usda/usdahome?navid=KYF_COMPASS',
+    meta: 'USDA',
+  },
+  { label: 'Dolan DNA Learning Center', href: 'https://www.dnalc.org/' },
+  { label: 'American Society of Plant Biologists', href: 'http://my.aspb.org/' },
+  { label: 'Understanding Evolution', href: 'http://evolution.berkeley.edu/', meta: 'UC Berkeley' },
+  { label: 'Maize Mazes', href: '/maize-mazes', note: 'Corn mazes to visit around the U.S.' },
+];
+---
+
+<BaseLayout
+  title="Resources"
+  description="Videos about maize science and the Panzea team, plus useful websites on crops, genetics, and evolution."
+>
+  <p class="lede">Other links and resources about maize, genetics, and our team.</p>
+
+  <nav class="jump" aria-label="Jump to section">
+    <a href="#videos">Videos</a>
+    <a href="#websites">Useful websites</a>
+  </nav>
+
+  <Section id="videos" title="Videos" action={{ label: 'Our YouTube channel', href: YOUTUBE_CHANNEL }}>
+    <LinkList items={VIDEOS} />
+  </Section>
+
+  <Section id="websites" title="Useful websites">
+    <LinkList items={SITES} />
+  </Section>
+
+  <OutreachNav current="/resources" />
+</BaseLayout>
+
+<style>
+  .lede {
+    max-width: var(--measure);
+  }
+
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+  }
+
+  .jump a {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .jump a:hover {
+    background: var(--gold-100);
+    border-color: var(--gold-500);
+  }
+</style>

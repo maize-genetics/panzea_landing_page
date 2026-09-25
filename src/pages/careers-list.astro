@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OutreachNav from '../components/outreach/OutreachNav.astro';
+import Section from '../components/outreach/Section.astro';
+
+const UNIVERSITY = [
+  { title: 'Professor', degree: 'PhD' },
+  { title: 'Research Associate', degree: 'PhD, 1–2 years' },
+  { title: 'Post-doctoral associate', degree: 'PhD' },
+  { title: 'Research Support Specialist', degree: 'BS, sometimes MS, several years' },
+  { title: 'Graduate student', degree: 'BS' },
+  { title: 'Research Technician (various levels)', degree: 'BS minimum' },
+  { title: 'Laboratory Assistant II', degree: 'HS, variable experience' },
+  { title: 'Laboratory Assistant I', degree: 'No degree or experience required' },
+];
+
+const ADMIN = ['Administrative Assistant', 'Accounting'];
+
+const FIELDS = [
+  {
+    title: 'Scientist',
+    items: [
+      'Molecular biology',
+      'Plant breeding',
+      'Plant pathology',
+      'Natural resources',
+      'Genetics (plant, animal, microbial, etc.)',
+      'Environmental conservation',
+    ],
+  },
+  { title: 'Education', items: ['Public awareness', 'Teacher: primary, secondary, or college'] },
+  {
+    title: 'Conservation',
+    items: ['National parks, protected areas', 'Environment, waste management', 'Government policy'],
+  },
+  { title: 'ELSI', items: ['Ethical, legal, and social issues of science'] },
+];
+---
+
+<BaseLayout
+  title="Careers List"
+  description="Possible careers in science, from university research positions to conservation, education, and policy, with the degrees they require."
+>
+  <p class="lede">Possible careers in science, and the degrees and experience they require.</p>
+
+  <Section
+    id="university"
+    title="Positions at universities"
+    action={{ label: 'Positions on our team', href: '/careers-in-science' }}
+  >
+    <ul class="rows">
+      {
+        UNIVERSITY.map((p) => (
+          <li>
+            <span class="role">{p.title}</span>
+            <span class="degree">{p.degree}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h3 class="sub">Administrative</h3>
+    <ul class="chips">
+      {ADMIN.map((a) => <li>{a}</li>)}
+    </ul>
+  </Section>
+
+  <Section
+    id="fields"
+    title="Beyond the university"
+    lede="Careers related to biodiversity conservation, plant genetics, crop improvement, and more."
+  >
+    <ul class="fields">
+      {
+        FIELDS.map((f) => (
+          <li>
+            <h3>{f.title}</h3>
+            <ul>
+              {f.items.map((i) => (
+                <li>{i}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <OutreachNav current="/careers-in-science" />
+</BaseLayout>
+
+<style>
+  .lede {
+    max-width: var(--measure);
+    margin-bottom: 2rem;
+  }
+
+  .rows {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    max-width: 48rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .rows li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    padding: 0.7rem 1.1rem;
+  }
+
+  .rows li + li {
+    border-top: 1px solid var(--border);
+  }
+
+  .role {
+    font-weight: 600;
+    color: var(--brown-700);
+  }
+
+  .degree {
+    padding: 0.05rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--green-700);
+    background: var(--gold-100);
+    border: 1px solid var(--gold-300);
+    border-radius: 999px;
+  }
+
+  .sub {
+    font-size: var(--step-1);
+    margin: 0 0 0.5rem;
+  }
+
+  .chips {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .chips li {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .fields {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(0.9rem, 2vw, 1.25rem);
+    grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+  }
+
+  .fields > li {
+    padding: 1rem 1.15rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .fields h3 {
+    font-size: var(--step-2);
+    margin: 0 0 0.5rem;
+  }
+
+  .fields ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.95rem;
+    color: var(--ink-muted);
+  }
+
+  .fields ul li::marker {
+    color: var(--gold-500);
+  }
+
+  .fields ul li + li {
+    margin-top: 0.2rem;
+  }
+</style>

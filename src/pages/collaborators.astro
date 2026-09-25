@@ -1,0 +1,278 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+
+type Resource = { label: string; href: string; note?: string };
+type Collaborator = {
+  id: string;
+  name: string;
+  tags: string[];
+  description: string;
+  website?: { label: string; href: string };
+  resources: Resource[];
+};
+
+const DATAVERSE = 'http://23.253.100.239/dvn/dv/seedsofdiscoverydvn/faces/study/StudyPage.xhtml?globalId=';
+
+const collaborators: Collaborator[] = [
+  {
+    id: 'g2f',
+    name: 'Genomes to Fields (G2F)',
+    tags: ['Environmental', 'Phenotypic', 'Genotypic (GBS)'],
+    description:
+      'G2F is an umbrella initiative to support translation of maize genomic information for the benefit of growers, consumers and society. Several PIs of the grant are involved in this project. Environmental, phenotypic, and genotypic (GBS) data is available through their resources page.',
+    website: { label: 'Visit Genomes to Fields', href: 'http://www.genomes2fields.org' },
+    resources: [
+      {
+        label: 'G2F data resources',
+        href: 'http://www.genomes2fields.org/resources/data/',
+        note: 'Environmental, phenotypic, and GBS data sets.',
+      },
+    ],
+  },
+  {
+    id: 'seed',
+    name: 'Seeds of Discovery (SeeD)',
+    tags: ['Phenotypic', 'Genotypic (GBS)', 'Passport', 'GWAS'],
+    description:
+      'The Seeds of Discovery (SeeD) initiative is a platform for utilizing maize and wheat genetic resources, with lessons that can be applied to other crops. SeeD has put together tools to facilitate the efficient use of these data and the germplasm that they describe, all accessible online.',
+    website: { label: 'About SeeD', href: 'http://seedsofdiscovery.org/about/' },
+    resources: [
+      {
+        label: 'SeeD Maize Germinate',
+        href: 'http://germinate.seedsofdiscovery.org/maize/',
+        note: 'Phenotypic, genotypic, and passport data.',
+      },
+      {
+        label: 'Unimputed GBS SNPs',
+        href: `${DATAVERSE}hdl:11529/10034`,
+        note: 'GBS-derived SNPs for maize landrace accessions in the SeeD-maize GWAS panel (Romero et al. 2017).',
+      },
+      {
+        label: 'Beagle-imputed GBS SNPs',
+        href: `${DATAVERSE}hdl:11529/10035`,
+        note: 'Imputed GBS-derived SNPs for the same SeeD-maize GWAS panel landraces (Romero et al. 2017).',
+      },
+      {
+        label: 'Romero et al. 2017 GWAS results',
+        href: 'http://hdl.handle.net/11529/10906',
+      },
+      {
+        label: 'Romero et al. 2017 GWAS code',
+        href: 'https://github.com/jar547/FOAM_FloweringTime/blob/master/FT.model',
+        note: 'Flowering time model on GitHub.',
+      },
+    ],
+  },
+  {
+    id: 'europe',
+    name: 'European diversity',
+    tags: ['Genotypic', 'Reference sequences'],
+    description:
+      'Our European colleagues have made several diversity data sets publicly available from recent publications.',
+    resources: [
+      {
+        label: 'Unterseer et al. 2016',
+        href: 'https://figshare.com/articles/Data_from_Unterseer_et_al_2016_Genome_Biology/3427040/1',
+        note: 'Genotypic information for 70 American and European Dent and 66 European Flint inbred lines.',
+      },
+      {
+        label: 'Unterseer et al. 2017',
+        href: 'http://biorxiv.org/content/early/2017/01/27/103747',
+        note: 'European Flint reference sequences.',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Collaborators’ Data"
+  description="Other maize diversity data from Panzea collaborators: Genomes to Fields, Seeds of Discovery (SeeD), and European diversity data sets."
+>
+  <p class="lede">Other maize diversity data from our collaborators.</p>
+
+  <nav class="jump" aria-label="Jump to collaborator">
+    <ul>
+      {
+        collaborators.map((c) => (
+          <li>
+            <a href={`#${c.id}`}>{c.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  {
+    collaborators.map((c) => (
+      <section class="collab" aria-labelledby={c.id}>
+        <div class="collab-head">
+          <h2 id={c.id}>{c.name}</h2>
+          <ul class="tags" aria-label="Data types">
+            {c.tags.map((t) => (
+              <li>{t}</li>
+            ))}
+          </ul>
+          <p class="desc">{c.description}</p>
+          {c.website && (
+            <a class="btn" href={c.website.href} rel="noopener">
+              {c.website.label} <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+
+        <ul class="resources">
+          {c.resources.map((r) => (
+            <li>
+              <a href={r.href} rel="noopener">
+                {r.label} <span aria-hidden="true">↗</span>
+              </a>
+              {r.note && <p>{r.note}</p>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+
+  <p class="tip">
+    Looking for Panzea's own data? See <a href={url('/genotypes')}>Genotypes</a>,{' '}
+    <a href={url('/phenotypes')}>Phenotypes</a>, and <a href={url('/gwas-results')}>GWAS results</a>.
+  </p>
+</BaseLayout>
+
+<style>
+  .lede {
+    font-size: var(--step-1);
+    max-width: var(--measure);
+  }
+
+  .jump ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0;
+    margin: 0 0 2rem;
+  }
+
+  .jump a {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .jump a:hover {
+    background: var(--gold-100);
+    border-color: var(--gold-500);
+  }
+
+  .collab {
+    display: grid;
+    gap: 1.25rem 2rem;
+    margin-bottom: clamp(1.5rem, 4vw, 2.25rem);
+    padding: clamp(1.1rem, 3vw, 1.6rem);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  @media (min-width: 56rem) {
+    .collab {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+
+  .collab h2 {
+    font-size: var(--step-3);
+    scroll-margin-top: 6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0 0 0.85rem;
+    padding: 0;
+  }
+
+  .tags li {
+    padding: 0.1rem 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--green-700);
+    background: var(--gold-100);
+    border: 1px solid var(--gold-300);
+    border-radius: 999px;
+  }
+
+  .desc {
+    font-size: 0.97rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.45rem 1rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    background: var(--green-700);
+    border: 1px solid var(--green-700);
+    border-radius: 999px;
+  }
+
+  .btn:hover {
+    color: #fff;
+    background: var(--green-600);
+    border-color: var(--green-600);
+  }
+
+  .resources {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: var(--surface-sunken);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .resources li {
+    padding: 0.8rem 1rem;
+  }
+
+  .resources li + li {
+    border-top: 1px solid var(--border);
+  }
+
+  .resources a {
+    font-weight: 600;
+  }
+
+  .resources p {
+    margin: 0.2rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--ink-muted);
+  }
+
+  .tip {
+    max-width: var(--measure);
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+</style>

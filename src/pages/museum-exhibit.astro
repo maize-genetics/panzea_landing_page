@@ -1,0 +1,194 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Feature from '../components/outreach/Feature.astro';
+import OutreachNav from '../components/outreach/OutreachNav.astro';
+import PillLink from '../components/outreach/PillLink.astro';
+import Section from '../components/outreach/Section.astro';
+import exhibitHall from '../assets/pages/education-and-outreach-card-1.jpg';
+import cornPalace from '../assets/pages/museum-exhibit-1.jpg';
+import displayCase from '../assets/pages/education-and-outreach-card-4.jpg';
+import titlePanel from '../assets/pages/museum-exhibit-2.jpg';
+
+const CONTACT = 'mailto:ews63@cornell.edu?subject=Maize exhibit';
+
+const PARTS = [
+  { count: '2', label: "15′ S-shaped panels" },
+  { count: '4', label: 'Interactives' },
+  { count: '10', label: 'Scientist biography panels' },
+  { count: '1', label: 'Title panel, plus items for display cases' },
+];
+
+const PHOTOS = [
+  {
+    src: cornPalace,
+    alt: 'The exhibit set up in a large hall beneath murals made of corn, with curved panels, interactive stations, and large cornfield photographs',
+    caption: 'Installed at the Corn Palace',
+  },
+  {
+    src: displayCase,
+    alt: 'A display case of maize ears in many colors, from deep purple to speckled and golden yellow, alongside a stone grinding bowl',
+    caption: 'A display case of diverse maize ears',
+  },
+  {
+    src: titlePanel,
+    alt: 'The purple exhibit title panel reading "Mysteries of an Ancient Grain", listing the project leads and the exhibit creators',
+    caption: 'The title panel credits the project leads and exhibit creators',
+  },
+];
+---
+
+<BaseLayout
+  title="Museum Exhibit"
+  description="Maize: Mysteries of an Ancient Grain, a traveling science museum exhibit developed with the Paleontological Research Institution's Museum of the Earth."
+>
+  <Feature
+    id="exhibit"
+    image={exhibitHall}
+    alt="Curved green exhibit panels titled Solving agricultural challenges and The evolution of maize continues, with interactive stations in front"
+    eyebrow="Traveling science exhibit"
+    title="Maize: Mysteries of an Ancient Grain"
+    eager
+  >
+    <p>
+      In collaboration with the Paleontological Research Institution's Museum of the Earth, we
+      developed a traveling science museum exhibit exploring why maize has been an important crop
+      for thousands of years.
+    </p>
+    <p>The exhibit is mobile and has traveled around the U.S.</p>
+    <Fragment slot="actions">
+      <PillLink href="/exhibit-schedule" variant="solid">See the travel schedule</PillLink>
+      <PillLink href={CONTACT}>Bring the exhibit near you</PillLink>
+    </Fragment>
+  </Feature>
+
+  <Section id="contents" title="What's in the exhibit">
+    <ul class="parts">
+      {
+        PARTS.map((p) => (
+          <li>
+            <span class="count">{p.count}</span>
+            <span class="label">{p.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section id="photos" title="Photos">
+    <ul class="photos">
+      {
+        PHOTOS.map((p) => (
+          <li>
+            <figure>
+              <Image src={p.src} alt={p.alt} widths={[420, 840]} sizes="(min-width: 60rem) 22rem, 100vw" />
+              <figcaption>{p.caption}</figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <aside class="host">
+    <div>
+      <p class="host-title">Interested in hosting the exhibit?</p>
+      <p>
+        Contact Beth Stricker to bring <em>Mysteries of an Ancient Grain</em> to a museum near you.
+      </p>
+    </div>
+    <PillLink href={CONTACT} variant="solid">Email Beth Stricker</PillLink>
+  </aside>
+
+  <OutreachNav current="/museum-exhibit" />
+</BaseLayout>
+
+<style>
+  .parts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(0.75rem, 2vw, 1rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
+  }
+
+  .parts li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .count {
+    font-family: var(--font-display);
+    font-size: var(--step-4);
+    line-height: 1;
+    color: var(--green-700);
+  }
+
+  .label {
+    font-weight: 600;
+    color: var(--brown-700);
+    line-height: 1.35;
+  }
+
+  .photos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  figure :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    background: var(--gold-100);
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+  }
+
+  .host {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--green-600);
+    border-radius: var(--radius);
+  }
+
+  .host p {
+    margin: 0;
+  }
+
+  .host-title {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    color: var(--brown-700);
+  }
+</style>

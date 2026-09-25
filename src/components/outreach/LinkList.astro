@@ -1,0 +1,86 @@
+---
+import { isExternal, url } from '../../lib/url';
+
+export type LinkItem = { label: string; href: string; note?: string; meta?: string };
+
+interface Props {
+  items: LinkItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="links">
+  {
+    items.map((item) => {
+      const external = isExternal(item.href);
+      return (
+        <li>
+          <div class="row">
+            <a href={url(item.href)} rel={external ? 'noopener' : undefined}>
+              {item.label} <span aria-hidden="true">{external ? '↗' : '→'}</span>
+            </a>
+            {item.meta && <span class="meta">{item.meta}</span>}
+          </div>
+          {item.note && <p>{item.note}</p>}
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 52rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  li {
+    padding: 0.8rem 1.1rem;
+  }
+
+  li + li {
+    border-top: 1px solid var(--border);
+  }
+
+  li:hover {
+    background: var(--surface-sunken);
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 0.75rem;
+  }
+
+  a {
+    font-weight: 600;
+  }
+
+  .meta {
+    padding: 0.05rem 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--brown-700);
+    background: var(--gold-100);
+    border: 1px solid var(--gold-300);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  p {
+    margin: 0.2rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--ink-muted);
+  }
+</style>

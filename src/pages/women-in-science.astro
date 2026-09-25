@@ -1,0 +1,392 @@
+---
+import { Image } from 'astro:assets';
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Feature from '../components/outreach/Feature.astro';
+import LinkList from '../components/outreach/LinkList.astro';
+import OutreachNav from '../components/outreach/OutreachNav.astro';
+import PillLink from '../components/outreach/PillLink.astro';
+import Section from '../components/outreach/Section.astro';
+import mcclintock from '../assets/pages/education-and-outreach-card-5.jpg';
+import tedFellows from '../assets/pages/women-in-science-hero.jpg';
+import { url } from '../lib/url';
+
+const TEAM = [
+  { label: 'Principal Investigators', people: ['sherry-flint-garcia', 'theresa-fulton', 'sharon-mitchell'] },
+  {
+    label: 'Postdoctoral Associates',
+    people: ['yinping-jiao', 'ginnie-morrison', 'christy-gault', 'tiffany-jamann'],
+  },
+  {
+    label: 'Graduate Students',
+    people: ['kelly-swarts', 'anna-glowinski', 'alessandra-york', 'michelle-stitzer', 'shang-xue'],
+  },
+  {
+    label: 'Staff',
+    people: ['sara-miller', 'anne-lorant', 'lynn-johnson', 'cinta-romay', 'kate-guill', 'susan-melia-hancock'],
+  },
+];
+
+const team = await Promise.all(
+  TEAM.map(async ({ label, people }) => ({
+    label,
+    members: await Promise.all(
+      people.map(async (id) => {
+        const entry = await getEntry('people', id);
+        if (!entry) throw new Error(`women-in-science: no person entry "${id}"`);
+        return entry;
+      }),
+    ),
+  })),
+);
+
+const MCCLINTOCK_LINKS = [
+  { label: 'Wikipedia', href: 'http://en.wikipedia.org/wiki/Barbara_McClintock' },
+  { label: 'PNAS', href: 'http://www.pnas.org/content/109/50/20198.full' },
+  { label: 'Famous Scientists', href: 'http://www.famousscientists.org/barbara-mcclintock/' },
+  { label: 'National Library of Medicine', href: 'http://profiles.nlm.nih.gov/LL/' },
+];
+
+const PIONEERS = [
+  { name: 'Mae Jemison', field: 'Physician and astronaut', href: 'http://en.wikipedia.org/wiki/Mae_Jemison' },
+  {
+    name: 'Grace Hopper',
+    field: 'Computer scientist and U.S. Navy admiral',
+    href: 'http://en.wikipedia.org/wiki/Grace_Hopper',
+  },
+  { name: 'Chien-Shiung Wu', field: 'Experimental physicist', href: 'http://en.wikipedia.org/wiki/Chien-Shiung_Wu' },
+  { name: 'Marie Curie', field: 'Physicist', href: 'http://en.wikipedia.org/wiki/Marie_Curie' },
+  { name: 'Vera Rubin', field: 'Astronomer', href: 'http://en.wikipedia.org/wiki/Vera_Rubin' },
+  { name: 'Rosalind Franklin', field: 'Chemist', href: 'http://en.wikipedia.org/wiki/Rosalind_Franklin' },
+];
+
+const RESOURCES = [
+  {
+    label: '10 women scientists you should follow on Twitter',
+    href: 'http://discov-her.com/en/article/10-women-scientists-you-should-follow-on-twitter',
+  },
+  {
+    label: "Smithsonian's Ten Historic Female Scientists You Should Know",
+    href: 'http://www.smithsonianmag.com/science-nature/ten-historic-female-scientists-you-should-know-84028788/',
+  },
+  { label: 'Women in science', href: 'http://en.wikipedia.org/wiki/Women_in_science', meta: 'Wikipedia' },
+  { label: 'Women in science', href: 'http://www.wired.com/2015/04/women-in-sciene/', meta: 'Wired, April 2015' },
+];
+---
+
+<BaseLayout
+  title="Women in Science"
+  description="Women scientists on the Panzea project, maize genetics pioneer Barbara McClintock, and resources about women in science."
+>
+  <p class="lede">
+    While women are generally underrepresented in the sciences, women are well represented in our
+    project at all levels.
+  </p>
+
+  <Section
+    id="team"
+    title="Women on our project"
+    lede="Read how some of our women team members got into the field of science."
+  >
+    <div class="team">
+      {
+        team.map(({ label, members }) => (
+          <div class="group">
+            <h3>{label}</h3>
+            <ul>
+              {members.map((m) => (
+                <li>
+                  <a href={url(`/${m.id}`)}>
+                    {m.data.photo ? (
+                      <Image src={m.data.photo} alt="" widths={[56, 112]} sizes="56px" class="avatar" />
+                    ) : (
+                      <span class="avatar initials" aria-hidden="true">
+                        {m.data.name
+                          .split(' ')
+                          .map((w) => w[0])
+                          .join('')}
+                      </span>
+                    )}
+                    <span>{m.data.name}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Feature
+    id="mcclintock"
+    image={mcclintock}
+    alt="Black-and-white photograph of Barbara McClintock at a laboratory bench beside a microscope"
+    eyebrow="Pioneer in maize genetics"
+    title="Barbara McClintock"
+  >
+    <p>
+      Barbara McClintock is one of the most famous women scientists, and a pioneer in maize
+      genetics.
+    </p>
+    <p class="read-more">Read more about her:</p>
+    <Fragment slot="actions">
+      {MCCLINTOCK_LINKS.map((l) => <PillLink href={l.href}>{l.label}</PillLink>)}
+    </Fragment>
+  </Feature>
+
+  <Section id="news" title="In the news">
+    <div class="news">
+      <article class="card ted">
+        <Image
+          src={tedFellows}
+          alt="Twelve women scientists, TED Fellows, posing together for a group portrait"
+          widths={[288]}
+          sizes="(min-width: 40rem) 11rem, 100vw"
+        />
+        <div>
+          <p class="eyebrow">TED Fellows</p>
+          <h3>
+            <a
+              href="https://medium.com/ted-fellows/meet-12-badass-scientists-who-also-happen-to-be-women-ace8d797bcad"
+              rel="noopener"
+            >
+              Meet 12 amazing women scientists <span aria-hidden="true">↗</span>
+            </a>
+          </h3>
+          <p>Read about the twelve women scientists pictured here.</p>
+        </div>
+      </article>
+      <article class="card">
+        <p class="eyebrow">Saruhashi Prize</p>
+        <h3>
+          <a href="http://blog.aspb.org/2015/11/03/keiko-torii-wins-japanese-saruhashi-prize/" rel="noopener">
+            Keiko Torii wins the Saruhashi Prize <span aria-hidden="true">↗</span>
+          </a>
+        </h3>
+        <p>
+          The University of Washington professor of biology and chief editor of <em>The Arabidopsis
+          Book</em> won the Japanese prize for female natural scientists for her work on cell–cell
+          communication and stomatal development in plants.
+        </p>
+      </article>
+    </div>
+  </Section>
+
+  <Section id="pioneers" title="Other important women in science">
+    <ul class="pioneers">
+      {
+        PIONEERS.map((p) => (
+          <li>
+            <a href={p.href} rel="noopener">
+              {p.name} <span aria-hidden="true">↗</span>
+            </a>
+            <span>{p.field}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section id="resources" title="More about women in science">
+    <LinkList items={RESOURCES} />
+  </Section>
+
+  <OutreachNav current="/women-in-science" />
+</BaseLayout>
+
+<style>
+  .lede {
+    max-width: var(--measure);
+    margin-bottom: 2rem;
+  }
+
+  .team {
+    display: grid;
+    gap: clamp(0.9rem, 2vw, 1.25rem);
+  }
+
+  @media (min-width: 40rem) {
+    .team {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 78rem) {
+    .team {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .group {
+    padding: 1rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .group h3 {
+    font-size: var(--step-1);
+    margin: 0 0 0.6rem;
+  }
+
+  .group ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .group a {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.25rem 0.4rem;
+    margin-inline: -0.4rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 999px;
+  }
+
+  .group a:hover {
+    background: var(--gold-100);
+  }
+
+  .group a:hover span:last-child {
+    text-decoration: underline;
+  }
+
+  .group :global(.avatar) {
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--gold-100);
+    border: 2px solid var(--gold-200);
+  }
+
+  .initials {
+    display: grid;
+    place-items: center;
+    font-size: 0.8rem;
+    color: var(--brown-700);
+  }
+
+  .read-more {
+    margin-bottom: 0;
+    font-weight: 600;
+    color: var(--brown-700);
+  }
+
+  .news {
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+    align-items: start;
+  }
+
+  .card {
+    padding: 1.1rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .ted {
+    display: grid;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  @media (min-width: 40rem) {
+    .ted {
+      grid-template-columns: 11rem minmax(0, 1fr);
+    }
+  }
+
+  .ted :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: calc(var(--radius) - 4px);
+  }
+
+  .eyebrow {
+    margin: 0 0 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--green-700);
+  }
+
+  .card h3 {
+    font-size: var(--step-1);
+    margin: 0 0 0.4rem;
+  }
+
+  .card h3 a {
+    text-decoration: none;
+  }
+
+  .card h3 a:hover {
+    text-decoration: underline;
+  }
+
+  .card p:not(.eyebrow) {
+    margin: 0;
+    font-size: 0.93rem;
+    color: var(--ink-muted);
+  }
+
+  .pioneers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 32rem) {
+    .pioneers {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 52rem) {
+    .pioneers {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .pioneers li {
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--green-600);
+    border-radius: var(--radius);
+  }
+
+  .pioneers a {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    text-decoration: none;
+  }
+
+  .pioneers a:hover {
+    text-decoration: underline;
+  }
+
+  .pioneers span {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+  }
+</style>

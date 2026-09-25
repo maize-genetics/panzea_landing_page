@@ -43,6 +43,19 @@ function resolves(path) {
   );
 }
 
+/** Must match the `base` astro.config.mjs builds with. */
+const base = (process.env.PANZEA_BASE || '').replace(/\/+$/, '');
+
+/**
+ * Map a link from the built HTML to a site-root path. Returns null when a
+ * base is configured but the link omits it, since that 404s on the host.
+ */
+function fromBuilt(link) {
+  if (!base) return link;
+  if (link === base || link.startsWith(`${base}/`)) return link.slice(base.length) || '/';
+  return null;
+}
+
 const problems = [];
 
 // 1. Legacy URL coverage.
@@ -64,7 +77,8 @@ for (const file of htmlFiles) {
   for (const [, raw] of html.matchAll(LINK_RE)) {
     if (!raw.startsWith('/') || raw.startsWith('//')) continue;
     checkedLinks += 1;
-    if (!resolves(raw)) {
+    const path = fromBuilt(raw);
+    if (path === null || !resolves(path)) {
       if (!badLinks.has(raw)) badLinks.set(raw, new Set());
       badLinks.get(raw).add(file);
     }
@@ -86,7 +100,10 @@ for (const file of htmlFiles) {
     if (raw.startsWith('/')) pdfRefs.add(raw);
   }
 }
-const missingPdfs = [...pdfRefs].filter((p) => !resolves(p));
+const missingPdfs = [...pdfRefs].filter((p) => {
+  const path = fromBuilt(p);
+  return path === null || !resolves(path);
+});
 for (const p of missingPdfs) problems.push(`missing PDF: ${p}`);
 
 console.log(`pages built:        ${htmlFiles.length}`);

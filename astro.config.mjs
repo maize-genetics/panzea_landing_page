@@ -1,5 +1,6 @@
 // @ts-check
 import { rm } from 'node:fs/promises';
+import { satteri } from '@astrojs/markdown-satteri';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 
@@ -26,14 +27,37 @@ const cnameOnlyInProduction = {
   },
 };
 
+const basePrefix = (base ?? '').replace(/\/+$/, '');
+
+/**
+ * Site-root links in Markdown content collections bypass src/lib/url.ts, so
+ * prefix them with the base here. Mirrors withBase() in src/lib/markdown.ts.
+ */
+const baseLinks = basePrefix ? {
+  name: 'panzea:base-links',
+  element: {
+    filter: [],
+    /** @param {any} node @param {import('satteri').HastVisitorContext} ctx */
+    visit(node, ctx) {
+      for (const attr of ['href', 'src']) {
+        const value = node.properties?.[attr];
+        if (typeof value === 'string' && value.startsWith('/') && !value.startsWith('//')) {
+          ctx.setProperty(node, attr, `${basePrefix}${value}`);
+        }
+      }
+    },
+  },
+} : null;
+
 export default defineConfig({
   site,
   base,
   trailingSlash: 'ignore',
   build: { format: 'file' },
   integrations: [sitemap(), cnameOnlyInProduction],
+  markdown: { processor: satteri({ hastPlugins: [baseLinks] }) },
   redirects: {
     // The old site shipped the people directory under two URLs.
-    '/people2': '/allpeople',
+    '/people2': `${basePrefix}/allpeople`,
   },
 });

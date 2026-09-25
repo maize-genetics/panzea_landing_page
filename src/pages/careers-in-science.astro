@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import YouTube from '../components/YouTube.astro';
+import Feature from '../components/outreach/Feature.astro';
+import OutreachNav from '../components/outreach/OutreachNav.astro';
+import PillLink from '../components/outreach/PillLink.astro';
+import Section from '../components/outreach/Section.astro';
+import TopicCards from '../components/outreach/TopicCards.astro';
+import lab from '../assets/pages/education-and-outreach-card-3.jpg';
+
+const POSITIONS = [
+  {
+    eyebrow: 'Usually a PhD + experience',
+    title: 'Principal investigator',
+    text: 'A PI typically has a PhD and quite a bit of experience. They lead a group of researchers and write proposals for funding and publications.',
+    href: '/pis',
+    cta: 'Meet our PIs',
+  },
+  {
+    eyebrow: 'PhD, one to two years',
+    title: 'Postdoctoral associate',
+    text: 'Someone who has completed their PhD and wants more training while they look for a more permanent job.',
+    href: '/post-docs',
+    cta: 'Meet our postdocs',
+  },
+  {
+    eyebrow: 'Working toward a PhD or MS',
+    title: 'Graduate student',
+    text: 'A person working on their PhD or MS degree.',
+    href: '/grad-students',
+    cta: 'Meet our graduate students',
+  },
+  {
+    eyebrow: 'Many paths',
+    title: 'Staff',
+    text: 'Computer programmers, research associates, laboratory technicians, field and greenhouse technicians, and administrative assistants all help support our project.',
+    href: '/staff',
+    cta: 'Meet our staff',
+  },
+];
+---
+
+<BaseLayout
+  title="Careers in Science"
+  description="The positions on the Panzea team, from principal investigators to lab technicians, plus other careers in science and the degrees they require."
+>
+  <Feature
+    id="intro"
+    image={lab}
+    alt="A scientist in purple gloves smiling as she pipettes samples at a busy laboratory bench"
+    eyebrow="There are many fascinating careers in science"
+    title="Find your place in science"
+    eager
+  >
+    <p>
+      You could work in a laboratory, field, or greenhouse, or spend your day writing computer
+      programs! Below are the positions of our team members, plus other career options.
+    </p>
+    <Fragment slot="actions">
+      <PillLink href="/allpeople" variant="solid">Read our biographies</PillLink>
+      <PillLink href="/women-in-science">Women in science</PillLink>
+    </Fragment>
+  </Feature>
+
+  <Section id="video" title={'Watch: \u201cWhy I like being a scientist\u201d'}>
+    <YouTube id="6lXkmcnUxNc" title="Why I like being a scientist" />
+  </Section>
+
+  <Section
+    id="positions"
+    title="Positions on our team"
+    lede="Read how some of the people in our group became scientists."
+  >
+    <TopicCards topics={POSITIONS} />
+  </Section>
+
+  <aside class="more-careers">
+    <div>
+      <p class="title">Other careers in science</p>
+      <p>From plant breeding to conservation policy, including the college degrees required.</p>
+    </div>
+    <PillLink href="/careers-list" variant="solid">See the careers list</PillLink>
+  </aside>
+
+  <OutreachNav current="/careers-in-science" />
+</BaseLayout>
+
+<style>
+  .more-careers {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding: 1.1rem 1.25rem;
+    background: linear-gradient(180deg, var(--sand-200), var(--gold-100));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .more-careers p {
+    margin: 0;
+  }
+
+  .title {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    color: var(--brown-700);
+  }
+</style>

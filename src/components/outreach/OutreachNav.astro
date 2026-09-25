@@ -1,0 +1,83 @@
+---
+import nav from '../../data/nav.json';
+import { url } from '../../lib/url';
+
+interface Props {
+  /** Nav href to mark as current; detail pages pass their parent's href. */
+  current: string;
+}
+
+const { current } = Astro.props;
+const group = nav.find((item) => item.href === '/education-and-outreach');
+const links = group?.children ?? [];
+---
+
+<nav class="more" aria-label="More in Education and Outreach">
+  <p class="title">
+    More in <a href={url('/education-and-outreach')}>Education and Outreach</a>
+  </p>
+  <ul>
+    {
+      links.map((link) => (
+        <li>
+          <a href={url(link.href)} aria-current={link.href === current ? 'page' : undefined}>
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .more {
+    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    padding: 1.1rem 1.2rem 1.2rem;
+    background: var(--surface-sunken);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .title {
+    margin: 0 0 0.7rem;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    color: var(--brown-700);
+  }
+
+  .title a {
+    color: inherit;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  li a {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--green-700);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  li a:hover {
+    background: var(--gold-100);
+    border-color: var(--gold-500);
+  }
+
+  li a[aria-current='page'] {
+    color: #fff;
+    background: var(--green-700);
+    border-color: var(--green-700);
+  }
+</style>

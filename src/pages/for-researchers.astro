@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Feature from '../components/outreach/Feature.astro';
+import OutreachNav from '../components/outreach/OutreachNav.astro';
+import PillLink from '../components/outreach/PillLink.astro';
+import Section from '../components/outreach/Section.astro';
+import TopicCards from '../components/outreach/TopicCards.astro';
+import nam from '../assets/pages/for-researchers-hero.png';
+
+const SOFTWARE = [
+  {
+    eyebrow: 'Java',
+    title: 'TASSEL',
+    text: 'Evaluate trait associations, evolutionary patterns, linkage disequilibrium, and more.',
+    href: 'https://maize-genetics.github.io/tassel/',
+    cta: 'Get TASSEL',
+  },
+  {
+    eyebrow: 'R',
+    title: 'GAPIT',
+    text: 'Relate genotype to phenotype with algorithms for genome-wide association mapping.',
+    href: 'http://www.maizegenetics.net/#!gapit/cmkv',
+    cta: 'Get GAPIT',
+  },
+  {
+    eyebrow: 'Breeding informatics',
+    title: 'GOBii',
+    text: 'The Genomic & Open-source Breeding Informatics Initiative.',
+    href: 'http://cbsugobii05.tc.cornell.edu/wordpress/',
+    cta: 'Visit GOBii',
+  },
+];
+
+const MORE = [
+  {
+    eyebrow: 'Read',
+    title: 'Publications',
+    text: 'Scientific publications from the Panzea project and its members.',
+    href: '/publications',
+    cta: 'Browse publications',
+  },
+  {
+    eyebrow: 'Watch',
+    title: 'GBS workshop videos',
+    text: 'Recorded sessions from one of our genotyping-by-sequencing workshops.',
+    href: 'http://cit.webcast.video.cornell.edu/Mediasite/Catalog/catalogs/gbs_workshop_2013',
+    cta: 'Watch the workshop',
+  },
+];
+---
+
+<BaseLayout
+  title="For Researchers"
+  description="Panzea resources for scientists: public data sets and genotype tools, open-source software like TASSEL and GAPIT, publications, and GBS workshop videos."
+>
+  <Feature
+    id="data"
+    image={nam}
+    alt="Diagram of the maize NAM population: 25 diverse inbred lines are each crossed to B73, and the F1s are selfed by single-seed descent into 200 recombinant inbred lines per family"
+    fit="contain"
+    caption="The maize nested association mapping (NAM) population design."
+    eyebrow="Open data"
+    title="Publicly available data"
+    eager
+  >
+    <p>See our Data page for data sets and genotype search tools.</p>
+    <Fragment slot="actions">
+      <PillLink href="/data" variant="solid">Explore the data</PillLink>
+      <PillLink href="/genotypes">Genotypes</PillLink>
+      <PillLink href="/phenotypes">Phenotypes</PillLink>
+    </Fragment>
+  </Feature>
+
+  <Section
+    id="software"
+    title="Open-source software"
+    lede="All of the software we develop is open source, and we encourage input to help make it better!"
+  >
+    <TopicCards topics={SOFTWARE} />
+  </Section>
+
+  <Section id="more" title="Publications and training">
+    <TopicCards topics={MORE} />
+  </Section>
+
+  <OutreachNav current="/for-researchers" />
+</BaseLayout>

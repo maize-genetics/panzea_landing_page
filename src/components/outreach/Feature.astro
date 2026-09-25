@@ -1,0 +1,117 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  title: string;
+  id?: string;
+  eyebrow?: string;
+  caption?: string;
+  /** Diagrams and screenshots should not be cropped. */
+  fit?: 'cover' | 'contain';
+  eager?: boolean;
+}
+
+const { image, alt, title, id, eyebrow, caption, fit = 'cover', eager = false } = Astro.props;
+---
+
+<section class="feature" aria-labelledby={id}>
+  <figure class:list={['media', fit]}>
+    <Image
+      src={image}
+      alt={alt}
+      widths={[480, 800]}
+      sizes="(min-width: 56rem) 26rem, 100vw"
+      loading={eager ? 'eager' : 'lazy'}
+    />
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+  <div class="text">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h2 id={id}>{title}</h2>
+    <slot />
+    {
+      Astro.slots.has('actions') && (
+        <div class="actions">
+          <slot name="actions" />
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .feature {
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    align-items: center;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+    background: linear-gradient(180deg, var(--sand-200), var(--gold-100));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  @media (min-width: 56rem) {
+    .feature {
+      grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+    }
+  }
+
+  .media {
+    margin: 0;
+  }
+
+  .media :global(img) {
+    display: block;
+    width: 100%;
+    border-radius: var(--radius);
+    border: 4px solid #fff;
+    box-shadow: var(--shadow-lift);
+    background: #fff;
+  }
+
+  .cover :global(img) {
+    aspect-ratio: 4 / 3;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .contain :global(img) {
+    height: auto;
+    object-fit: contain;
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--ink-muted);
+  }
+
+  .eyebrow {
+    margin: 0 0 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--green-700);
+  }
+
+  h2 {
+    font-size: var(--step-3);
+  }
+
+  .text :global(p) {
+    max-width: 58ch;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.1rem;
+  }
+</style>

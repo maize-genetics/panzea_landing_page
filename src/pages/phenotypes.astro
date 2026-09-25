@@ -1,0 +1,294 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import data from '../data/phenotypes.json';
+import { mdInline } from '../lib/markdown';
+import { url } from '../lib/url';
+import cornEar from '../assets/phenotypes/CornEarRuler.png';
+
+// Content mirrors the Cornell file gateway the old page embedded in an iframe.
+type File = { name: string; href: string; description: string; released: string };
+type Dataset = {
+  id: string;
+  title: string;
+  description: string;
+  citation?: string;
+  gateway: string;
+  files: File[];
+};
+
+const datasets = data.datasets as Dataset[];
+const totalFiles = datasets.reduce((n, d) => n + d.files.length, 0);
+
+const FORMATS: Record<string, string> = { txt: 'Text', xls: 'Excel', xlsx: 'Excel', zip: 'ZIP' };
+const format = (name: string) => FORMATS[name.split('.').pop()?.toLowerCase() ?? ''] ?? 'File';
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+const released = (iso: string) => dateFmt.format(new Date(`${iso}T00:00:00Z`));
+---
+
+<BaseLayout
+  title="Phenotypes"
+  description={`Download ${totalFiles} public maize phenotype data files from Panzea: the maize 282 and Ames association panels, the NAM population, and teosinte-maize domestication populations.`}
+>
+  <div class="overview">
+    <Image
+      class="figure"
+      src={cornEar}
+      alt="Maize ear measured against a ruler"
+      widths={[cornEar.width]}
+    />
+    <div>
+      <p class="lede">
+        Download the latest public &ldquo;flat file&rdquo; versions of prepackaged phenotypic data
+        sets.
+      </p>
+      <p>
+        This project has collected and released phenotypic data for numerous agronomic,
+        developmental, and domestication-related traits collected in the maize 282 or Ames inbred
+        association panels, the NAM population, or custom teosinte-maize populations.
+      </p>
+    </div>
+  </div>
+
+  <nav class="jump" aria-label="Jump to data set">
+    <ul>
+      {
+        datasets.map((d) => (
+          <li>
+            <a href={`#${d.id}`}>
+              {d.title.replace(/ phenotypes.*$/i, '')}
+              <span class="count">{d.files.length}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  {
+    datasets.map((d) => (
+      <section class="group" aria-labelledby={d.id}>
+        <h2 id={d.id}>{d.title}</h2>
+        <p class="group-desc">{d.description}</p>
+        {d.citation && (
+          <p class="cite">
+            <strong>Citation:</strong> <span set:html={mdInline(d.citation)} />
+          </p>
+        )}
+
+        <ul class="files">
+          {d.files.map((f) => (
+            <li class="file">
+              <div class="file-main">
+                <a class="file-name" href={f.href} rel="noopener">
+                  {f.name}
+                </a>
+                <p class="file-desc" set:html={mdInline(f.description)} />
+              </div>
+              <ul class="meta" aria-label="File details">
+                <li class="format">{format(f.name)}</li>
+                <li>
+                  <time datetime={f.released}>{released(f.released)}</time>
+                </li>
+              </ul>
+            </li>
+          ))}
+        </ul>
+
+        <a class="gateway" href={d.gateway} rel="noopener">
+          View this data set on the Panzea file gateway <span aria-hidden="true">↗</span>
+        </a>
+      </section>
+    ))
+  }
+
+  <p class="tip">
+    If a download link doesn't open, try right-clicking it and opening it in a new tab. Looking for
+    other data? See <a href={url('/genotypes')}>Genotypes</a> and{' '}
+    <a href={url('/gwas-results')}>GWAS results</a>.
+  </p>
+</BaseLayout>
+
+<style>
+  .overview {
+    display: grid;
+    gap: 1.25rem 1.75rem;
+    align-items: start;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .overview {
+      grid-template-columns: 14rem minmax(0, 1fr);
+    }
+  }
+
+  .overview :global(.figure) {
+    display: block;
+    width: 100%;
+    max-width: 14rem;
+    height: auto;
+    padding: 0.75rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .overview > div {
+    max-width: var(--measure);
+  }
+
+  .lede {
+    font-size: var(--step-1);
+    margin-bottom: 0.6rem;
+  }
+
+  .jump ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0;
+    margin: 0 0 2.5rem;
+  }
+
+  .jump a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.3rem 0.5rem 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .jump a:hover {
+    background: var(--gold-100);
+    border-color: var(--gold-500);
+  }
+
+  .count {
+    min-width: 1.5rem;
+    padding: 0 0.4rem;
+    font-size: 0.78rem;
+    text-align: center;
+    color: #fff;
+    background: var(--green-700);
+    border-radius: 999px;
+  }
+
+  .group {
+    margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+  .group h2 {
+    scroll-margin-top: 6rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 3px solid var(--gold-300);
+  }
+
+  .group-desc,
+  .cite {
+    max-width: var(--measure);
+  }
+
+  .cite {
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+  }
+
+  .files {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .file {
+    display: grid;
+    gap: 0.5rem 1.5rem;
+    padding: 0.95rem 1.15rem;
+  }
+
+  .file + .file {
+    border-top: 1px solid var(--border);
+  }
+
+  .file:hover {
+    background: var(--surface-sunken);
+  }
+
+  @media (min-width: 48rem) {
+    .file {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+    }
+  }
+
+  .file-name {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .file-desc {
+    margin: 0.25rem 0 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    max-width: 72ch;
+  }
+
+  .meta {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .meta li {
+    padding: 0.1rem 0.55rem;
+    color: var(--ink-muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .meta .format {
+    font-weight: 700;
+    color: var(--green-700);
+    background: var(--gold-100);
+    border-color: var(--gold-300);
+  }
+
+  .gateway {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .tip {
+    max-width: var(--measure);
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+</style>

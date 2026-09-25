@@ -8,7 +8,7 @@ cards:
     image: "../../assets/pages/data-card-1.jpg"
     text: "From this page you can obtain the latest public, \"flat file\" versions of prepackaged, genotypic data sets. All of these can be opened with the TASSEL 5 (GUI or command line). The genotypes were obtained by whole genome sequencing (\"HapMap\"), GBS, or with MaizeSNP5O chip or traditional SNP assays."
   - title: "Phenotypic Data Sets"
-    href: "http://cbsusrv04.tc.cornell.edu/users/panzea/filegateway.aspx?category=Phenotypes"
+    href: "/phenotypes"
     image: "../../assets/pages/data-card-2.png"
     text: "From this page you can obtain the latest public, \"flat file\" versions of prepackaged, phenotypic data sets. These phenotypes are from the maize 282 association panel, the NAM population, the USDA Ames inbreds, and custom teosinte populations for studying domestication traits."
   - title: "GWAS Results"

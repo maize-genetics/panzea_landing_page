@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import YouTube from '../components/YouTube.astro';
+import Feature from '../components/outreach/Feature.astro';
+import LinkList from '../components/outreach/LinkList.astro';
+import OutreachNav from '../components/outreach/OutreachNav.astro';
+import PillLink from '../components/outreach/PillLink.astro';
+import Section from '../components/outreach/Section.astro';
+import TopicCards from '../components/outreach/TopicCards.astro';
+import exhibit from '../assets/pages/for-the-general-public-hero.jpg';
+
+const YOUTUBE_CHANNEL = 'https://www.youtube.com/channel/UCS1SdXlyMI1OsSf5yA_oFqw';
+
+const VIDEOS = [
+  {
+    label: 'Secrets of Plant Genomes Revealed!',
+    href: 'http://www.nsf.gov/news/mmg/mmg_disp.jsp?med_id=61504',
+    note: 'Members of our group in a National Science Foundation video.',
+    meta: 'NSF',
+  },
+  {
+    label: 'The Love Life of Plants',
+    href: 'http://www.gatesnotes.com/Development/Love-Life-of-Plants-Cornell-University',
+    note: 'Bill Gates visited our group and others at Cornell University and wrote about it, including a video.',
+    meta: 'Gates Notes',
+  },
+  {
+    label: 'Why I like being a scientist (short version)',
+    href: 'https://www.youtube.com/watch?v=LyFJ9HL0Llo',
+    note: 'A three-minute cut of the video above.',
+    meta: '3 min',
+  },
+];
+
+const CAREERS = [
+  {
+    eyebrow: 'Careers',
+    title: 'Careers in science',
+    text: 'Interested in a career in science? Find out more about the possibilities.',
+    href: '/careers-in-science',
+    cta: 'Explore careers',
+  },
+  {
+    eyebrow: 'People',
+    title: 'Meet our scientists',
+    text: 'Read biographies of how our team members became scientists and why they love their jobs.',
+    href: '/allpeople',
+    cta: 'Read biographies',
+  },
+];
+---
+
+<BaseLayout
+  title="For the General Public"
+  description="Panzea outreach for the general public: a traveling maize museum exhibit, videos about our science, and careers in science."
+>
+  <Feature
+    id="exhibit"
+    image={exhibit}
+    alt="Curved green exhibit panels asking What is evolution? and Is genetic diversity essential?, set up in a hall decorated with corn murals"
+    eyebrow="Traveling museum exhibit"
+    title="Mysteries of an Ancient Grain"
+    eager
+  >
+    <p>
+      In collaboration with the Paleontological Research Institution's{' '}
+      <a href="http://museumoftheearth.org/" rel="noopener">Museum of the Earth</a>, we have a
+      traveling science museum exhibit about maize and its diversity.
+    </p>
+    <Fragment slot="actions">
+      <PillLink href="/museum-exhibit" variant="solid">More about the exhibit</PillLink>
+      <PillLink href="/exhibit-schedule">Where it is and will be</PillLink>
+    </Fragment>
+  </Feature>
+
+  <Section
+    id="videos"
+    title="Watch our science"
+    action={{ label: 'Our YouTube channel', href: YOUTUBE_CHANNEL }}
+  >
+    <div class="watch">
+      <div>
+        <YouTube id="6lXkmcnUxNc" title="Why I like being a scientist" />
+      </div>
+      <LinkList items={VIDEOS} />
+    </div>
+  </Section>
+
+  <Section id="careers" title="Thinking about a career in science?">
+    <TopicCards topics={CAREERS} />
+  </Section>
+
+  <OutreachNav current="/for-the-general-public" />
+</BaseLayout>
+
+<style>
+  .watch {
+    display: grid;
+    gap: clamp(1rem, 3vw, 1.75rem);
+    align-items: start;
+  }
+
+  @media (min-width: 56rem) {
+    .watch {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    }
+  }
+
+  .watch :global(.yt) {
+    margin: 0;
+  }
+</style>

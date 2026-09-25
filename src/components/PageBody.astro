@@ -4,7 +4,6 @@ import { render, type CollectionEntry } from 'astro:content';
 import Callout from './Callout.astro';
 import CardGrid from './CardGrid.astro';
 import Gallery from './Gallery.astro';
-import YouTube from './YouTube.astro';
 import { url } from '../lib/url';
 
 interface Props {
@@ -14,14 +13,6 @@ interface Props {
 const { page } = Astro.props;
 const { title, hero, heroCaption, retiredTool, cards, gallery } = page.data;
 const { Content } = await render(page);
-
-// The old site embedded the project's "Why I like being a scientist" video on
-// these two pages; the Wix iframe becomes a click-to-load player.
-const VIDEOS: Record<string, { id: string; title: string }> = {
-  'careers-in-science': { id: '6lXkmcnUxNc', title: 'Why I like being a scientist' },
-  'for-the-general-public': { id: '6lXkmcnUxNc', title: 'Why I like being a scientist' },
-};
-const video = VIDEOS[page.id];
 ---
 
 {
@@ -40,9 +31,6 @@ const video = VIDEOS[page.id];
 }
 
 <div class="prose"><Content /></div>
-
-{video && <YouTube id={video.id} title={video.title} />}
-
 {
   retiredTool && (
     <Callout title="This search tool has been retired" tone="notice">

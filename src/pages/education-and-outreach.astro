@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CardGrid from '../components/CardGrid.astro';
+import Section from '../components/outreach/Section.astro';
+import TopicCards from '../components/outreach/TopicCards.astro';
+import museum from '../assets/pages/education-and-outreach-card-1.jpg';
+import teachers from '../assets/pages/education-and-outreach-card-2.jpg';
+import careers from '../assets/pages/education-and-outreach-card-3.jpg';
+import publicImg from '../assets/pages/education-and-outreach-card-4.jpg';
+import women from '../assets/pages/education-and-outreach-card-5.jpg';
+import researchers from '../assets/pages/education-and-outreach-card-6.jpg';
+
+const CARDS = [
+  {
+    title: 'Museum Exhibit',
+    href: '/museum-exhibit',
+    image: museum,
+    text: 'Our science museum exhibit "Mysteries of an Ancient Grain" travels around the US. See a [photo gallery, more information](/museum-exhibit), and its [travel schedule](/exhibit-schedule).',
+  },
+  {
+    title: 'For the General Public',
+    href: '/for-the-general-public',
+    image: publicImg,
+    text: 'Our resources for the general public include a [traveling science museum exhibit](/museum-exhibit), videos, and information on [careers in science](/careers-in-science).',
+  },
+  {
+    title: 'For Teachers',
+    href: '/for-teachers',
+    image: teachers,
+    text: 'We have resources especially for [teachers](/for-teachers), including a [Teacher-Friendly Guide to the Evolution of Maize](http://maize.teacherfriendlyguide.org/).',
+  },
+  {
+    title: 'Careers in Science',
+    href: '/careers-in-science',
+    image: careers,
+    text: 'You could work in a laboratory, field or greenhouse, or spend your day writing computer programs! Find out [more](/careers-in-science), and read [biographies](/allpeople) of the people on our project.',
+  },
+  {
+    title: 'Women in Science',
+    href: '/women-in-science',
+    image: women,
+    text: 'Barbara McClintock was a pioneer in maize genetics. Although women are still underrepresented in science, they are well represented in our group. Find out more about [women in science](/women-in-science).',
+  },
+  {
+    title: 'For Researchers',
+    href: '/for-researchers',
+    image: researchers,
+    text: 'Find out more about our [publicly available data](/data), [scientific publications](/publications), videos from a GBS workshop, and other resources for scientists.',
+  },
+];
+
+const MORE = [
+  {
+    eyebrow: 'Links',
+    title: 'Resources',
+    text: 'Videos about maize and our team, plus useful websites on crops, genetics, and evolution.',
+    href: '/resources',
+    cta: 'Browse resources',
+  },
+  {
+    eyebrow: 'Just for fun',
+    title: 'Maize Mazes',
+    text: 'Corn mazes to visit around the U.S., from upstate New York to New Mexico.',
+    href: '/maize-mazes',
+    cta: 'Find a maze',
+  },
+];
+---
+
+<BaseLayout
+  title="Education and Outreach"
+  description="Panzea education and outreach: a traveling museum exhibit, resources for teachers and the public, careers and women in science, and tools for researchers."
+>
+  <p class="lede">
+    Sharing the story of maize diversity with students, teachers, the public, and fellow
+    scientists.
+  </p>
+
+  <Section id="audiences" title="Explore by audience">
+    <div class="audiences"><CardGrid cards={CARDS} /></div>
+  </Section>
+
+  <Section id="more" title="More to explore">
+    <TopicCards topics={MORE} />
+  </Section>
+</BaseLayout>
+
+<style>
+  .lede {
+    max-width: var(--measure);
+    margin-bottom: 2rem;
+  }
+
+  .audiences :global(.cards) {
+    margin-top: 0;
+  }
+</style>

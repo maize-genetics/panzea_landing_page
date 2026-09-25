@@ -1,0 +1,92 @@
+---
+import { isExternal, url } from '../../lib/url';
+
+export type Topic = { title: string; href: string; text: string; eyebrow?: string; cta?: string };
+
+interface Props {
+  topics: Topic[];
+}
+
+const { topics } = Astro.props;
+---
+
+<ul class="topics">
+  {
+    topics.map((t) => {
+      const external = isExternal(t.href);
+      return (
+        <li class="topic">
+          {t.eyebrow && <p class="eyebrow">{t.eyebrow}</p>}
+          <h3>{t.title}</h3>
+          <p class="text">{t.text}</p>
+          <a href={url(t.href)} rel={external ? 'noopener' : undefined}>
+            {t.cta ?? 'Learn more'}<span class="visually-hidden">: {t.title}</span>
+            <span aria-hidden="true">{external ? '↗' : '→'}</span>
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style>
+  .topics {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(0.9rem, 2vw, 1.25rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+  }
+
+  .topic {
+    display: flex;
+    flex-direction: column;
+    padding: 1.05rem 1.15rem 1.15rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition:
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+
+  .topic:has(a:hover),
+  .topic:has(a:focus-visible) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .eyebrow {
+    margin: 0 0 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--green-700);
+  }
+
+  h3 {
+    font-size: var(--step-2);
+    margin: 0 0 0.4rem;
+  }
+
+  .text {
+    flex: 1;
+    margin: 0 0 0.8rem;
+    font-size: 0.93rem;
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+
+  a {
+    font-weight: 600;
+    font-size: 0.93rem;
+  }
+
+  a span[aria-hidden] {
+    margin-left: 0.3em;
+  }
+</style>

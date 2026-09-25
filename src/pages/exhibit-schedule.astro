@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OutreachNav from '../components/outreach/OutreachNav.astro';
+import PillLink from '../components/outreach/PillLink.astro';
+import Section from '../components/outreach/Section.astro';
+
+type Stop = { venue: string; place?: string; dates: string; kind?: 'break' | 'open' };
+
+const STOPS: Stop[] = [
+  { venue: 'The Science Center of Iowa', place: 'Des Moines, IA', dates: 'Sept 1, 2014 – January 4, 2015' },
+  { venue: 'SciWorks', place: 'Winston-Salem, NC', dates: 'January 10 – February 28, 2015' },
+  { venue: 'Reading Public Museum', place: 'Reading, PA', dates: 'March 5 – June 3, 2015' },
+  { venue: 'SunWatch Indian Village', place: 'Dayton, OH', dates: 'June 8 – Sept 4, 2015' },
+  { venue: 'Science Central', place: 'Fort Wayne, IN', dates: 'Sept 10, 2015 – January 7, 2016' },
+  { venue: 'Back to Ithaca for restoration', dates: 'January 13 – January 27, 2016', kind: 'break' },
+  { venue: 'Available to host', dates: 'February 2 – July 20, 2016', kind: 'open' },
+  { venue: 'Dakota Science Center', place: 'Grand Forks, ND', dates: 'July 28 – November 4, 2016' },
+];
+---
+
+<BaseLayout
+  title="Exhibit Schedule"
+  description="Where the traveling maize diversity exhibit, Mysteries of an Ancient Grain, has been and where it is headed."
+>
+  <p class="lede">
+    Where the maize diversity exhibit, <em>Mysteries of an Ancient Grain</em>, has traveled.
+  </p>
+
+  <Section id="tour" title="Tour schedule" action={{ label: 'About the exhibit', href: '/museum-exhibit' }}>
+    <ol class="timeline">
+      {
+        STOPS.map((s) => (
+          <li class:list={[s.kind]}>
+            <p class="dates">{s.dates}</p>
+            <p class="venue">{s.venue}</p>
+            {s.place && <p class="place">{s.place}</p>}
+          </li>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <aside class="host">
+    <p>Interested in the exhibit traveling to a locale near you?</p>
+    <PillLink href="mailto:ews63@cornell.edu?subject=Maize exhibit" variant="solid">
+      Contact Beth Stricker
+    </PillLink>
+  </aside>
+
+  <OutreachNav current="/museum-exhibit" />
+</BaseLayout>
+
+<style>
+  .lede {
+    max-width: var(--measure);
+    margin-bottom: 2rem;
+  }
+
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1.5rem;
+    max-width: 44rem;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.45rem;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--gold-300);
+  }
+
+  .timeline li {
+    position: relative;
+    padding: 0.8rem 1.1rem;
+    margin-bottom: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    left: calc(-1.5rem + 0.1rem);
+    top: 1.05rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: var(--green-600);
+    border: 3px solid var(--gold-100);
+    box-shadow: 0 0 0 1px var(--gold-500);
+  }
+
+  .timeline li.break,
+  .timeline li.open {
+    background: var(--surface-sunken);
+    box-shadow: none;
+    border-style: dashed;
+  }
+
+  .timeline li.break::before,
+  .timeline li.open::before {
+    background: var(--gold-500);
+  }
+
+  .timeline p {
+    margin: 0;
+  }
+
+  .dates {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--green-700);
+  }
+
+  .venue {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    color: var(--brown-700);
+  }
+
+  .place {
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+  }
+
+  .host {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    max-width: 44rem;
+    padding: 1rem 1.25rem;
+    background: var(--gold-100);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--green-600);
+    border-radius: var(--radius);
+  }
+
+  .host p {
+    margin: 0;
+    font-weight: 600;
+    color: var(--brown-700);
+  }
+</style>

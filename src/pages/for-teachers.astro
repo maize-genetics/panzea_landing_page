@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Feature from '../components/outreach/Feature.astro';
+import LinkList from '../components/outreach/LinkList.astro';
+import OutreachNav from '../components/outreach/OutreachNav.astro';
+import PillLink from '../components/outreach/PillLink.astro';
+import Section from '../components/outreach/Section.astro';
+import TopicCards from '../components/outreach/TopicCards.astro';
+import guide from '../assets/pages/education-and-outreach-card-2.jpg';
+
+const CLASSROOM = [
+  {
+    eyebrow: 'Field trip',
+    title: 'Traveling museum exhibit',
+    text: 'Mysteries of an Ancient Grain explores why maize has been an important crop for thousands of years.',
+    href: '/museum-exhibit',
+    cta: 'About the exhibit',
+  },
+  {
+    eyebrow: 'Inspire',
+    title: 'Careers in science',
+    text: 'We hope to encourage young people to consider a career in science.',
+    href: '/careers-in-science',
+    cta: 'Explore careers',
+  },
+  {
+    eyebrow: 'Role models',
+    title: 'Women in science',
+    text: 'Meet the women scientists on our project and pioneers like Barbara McClintock.',
+    href: '/women-in-science',
+    cta: 'Meet them',
+  },
+];
+
+const VIDEOS = [
+  {
+    label: 'Secrets of Plant Genomes Revealed!',
+    href: 'http://www.nsf.gov/news/mmg/mmg_disp.jsp?med_id=61504',
+    note: 'A National Science Foundation video starring some of our project members.',
+    meta: 'NSF',
+  },
+  {
+    label: 'The Love Life of Plants',
+    href: 'http://www.gatesnotes.com/Development/Love-Life-of-Plants-Cornell-University',
+    note: 'Bill Gates visited our group and others at Cornell University and wrote about it, including a video.',
+    meta: 'Gates Notes',
+  },
+];
+
+const LINKS = [
+  {
+    label: 'Weed to Wonder',
+    href: 'http://www.weedtowonder.org/',
+    note: 'How humans changed corn and how corn changed human society.',
+  },
+  {
+    label: 'UC Berkeley Understanding Evolution',
+    href: 'http://evolution.berkeley.edu/evolibrary/home.php',
+  },
+  {
+    label: 'DNA Learning Center at Cold Spring Harbor',
+    href: 'https://www.dnalc.org/',
+  },
+];
+---
+
+<BaseLayout
+  title="For Teachers"
+  description="Classroom resources from Panzea, including the Teacher-Friendly Guide to the Evolution of Maize, a traveling museum exhibit, and videos."
+>
+  <Feature
+    id="guide"
+    image={guide}
+    alt="The home page of the Teacher-Friendly Guide to the Evolution of Maize website"
+    fit="contain"
+    eyebrow="Free teaching guide"
+    title="The Teacher-Friendly Guide to the Evolution of Maize"
+    eager
+  >
+    <p>
+      In collaboration with the{' '}
+      <a href="http://www.priweb.org" rel="noopener"
+        >Paleontological Research Institution's Museum of the Earth</a
+      >, we developed the Teacher-Friendly Guide (TFG) to the Evolution of Maize. It gives teachers
+      the background information they need to teach evolution, using maize as an example.
+    </p>
+    <Fragment slot="actions">
+      <PillLink href="http://maize.teacherfriendlyguide.org/" variant="solid">Open the guide</PillLink>
+    </Fragment>
+  </Feature>
+
+  <Section id="classroom" title="Beyond the classroom">
+    <TopicCards topics={CLASSROOM} />
+  </Section>
+
+  <div class="columns">
+    <Section id="videos" title="Videos">
+      <LinkList items={VIDEOS} />
+    </Section>
+    <Section id="links" title="Useful links">
+      <LinkList items={LINKS} />
+    </Section>
+  </div>
+
+  <OutreachNav current="/for-teachers" />
+</BaseLayout>
+
+<style>
+  .columns {
+    display: grid;
+    gap: 0 clamp(1.25rem, 3vw, 2rem);
+    align-items: start;
+  }
+
+  @media (min-width: 56rem) {
+    .columns {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

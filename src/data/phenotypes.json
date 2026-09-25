@@ -1,0 +1,151 @@
+{
+  "datasets": [
+    {
+      "id": "maize-282",
+      "title": "Maize 282 association panel phenotypes (± NAM)",
+      "description": "Phenotypes for either our \"Maize 282\" association panel alone, or the 282 and NAM panel combined.",
+      "gateway": "https://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=9",
+      "files": [
+        {
+          "name": "traitMatrix_maize282NAM_v15-130212.txt",
+          "href": "https://cornell.box.com/s/9ajknctf69inw2bpv9ul0xznkocapn5b",
+          "description": "A single text file containing all of our public phenotypic data for the NAM and maize 282 association population collected between 2006 and 2009: 285 trait/environment combinations for 57 traits. [Trait descriptions and environment (location/year) codes](http://media.wix.com/ugd/fe9228_b5ed6deb55d445a4ad7ea4160e19ca8a.xlsx?dn=%22traitMatrix_maize282NAM_codes_v15-130212.xlsx%22) are available separately.",
+          "released": "2013-02-12"
+        },
+        {
+          "name": "Peiffer2014Genetics_blupPhenos20150325.xlsx",
+          "href": "https://cornell.box.com/s/59kqlf5n00afuwk25vtoh7i32f8vu4o3",
+          "description": "Phenotypic data (BLUPs) from [Peiffer et al. 2014. The genetic architecture of maize height. *Genetics* 196:1337](http://dx.doi.org/10.1534/genetics.113.159152). Includes the Ames inbreds as well as NAM and the maize 282.",
+          "released": "2015-03-25"
+        },
+        {
+          "name": "Cook_etal_2012_kernel_comp_pheno_data-111202.zip",
+          "href": "https://cornell.box.com/s/5q2nff2iypn64vzp8817g8i3pxyca41f",
+          "description": "Kernel composition phenotypic data from Cook et al. 2012. Genetic architecture of maize kernel composition in the nested association mapping and inbred association panels. *Plant Physiology* 158: 824-834.",
+          "released": "2011-12-02"
+        }
+      ]
+    },
+    {
+      "id": "nam",
+      "title": "NAM phenotypes",
+      "description": "Phenotypes for our maize Nested Association Mapping (NAM) population.",
+      "gateway": "https://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=10",
+      "files": [
+        {
+          "name": "Kump_etal_2011_NatGen_SLB_pheno_data-120711.zip",
+          "href": "https://cornell.box.com/s/hy45w5c8owoy6cwm3v2a28z9isn1txwn",
+          "description": "Southern leaf blight phenotypic data from Kump et al. 2011. Genome-wide association study of quantitative resistance to southern leaf blight in the maize nested association mapping population. *Nature Genetics* 43: 163-168.",
+          "released": "2012-07-11"
+        },
+        {
+          "name": "Hung_etal_2012_PNAS_data-120523.zip",
+          "href": "https://cornell.box.com/s/yc95tqcgkyh4vtjwtbi3m3cfha47i748",
+          "description": "Phenotypic and genotypic data from Hung et al. 2012. *ZmCCT* and the genetic basis of daylength adaptation underlying the post-domestication spread of maize. *PNAS* 109: E1913-E1921.",
+          "released": "2012-05-23"
+        },
+        {
+          "name": "Brown_etal_2011_PLoSGenet_pheno_data-120523.zip",
+          "href": "https://cornell.box.com/s/ilznr54qwd0uextruec13ztqxojvvs6e",
+          "description": "Phenotypic data (BLUPs and raw data) from Brown et al. 2011. Distinct genetic architectures for male and female inflorescence traits of maize. *PLoS Genetics* 7: e1002383.",
+          "released": "2012-05-23"
+        },
+        {
+          "name": "Hung_etal_2012_Heredity_data-110913.zip",
+          "href": "https://cornell.box.com/s/hplzrwrv8rwxzflroev0kqi3nij3bwte",
+          "description": "Phenotypic data from Hung et al. 2012. The relationship between parental genetic or phenotypic divergence and progeny variation in the maize Nested Association Mapping population. *Heredity* 108: 490-499.",
+          "released": "2011-09-13"
+        },
+        {
+          "name": "Poland_etal_2011_PNAS_NLB_pheno_data-110426.zip",
+          "href": "https://cornell.box.com/s/v9p1014caknk86at9kkkv5xw2vomdypy",
+          "description": "Northern leaf blight phenotypic data from Poland et al. 2011. Genome-wide nested association mapping of quantitative resistance to northern leaf blight in maize. *PNAS* 108: 6893-6898.",
+          "released": "2011-04-26"
+        },
+        {
+          "name": "Tian_etal_2011_NatGen_leaf_pheno_data-110221.zip",
+          "href": "https://cornell.box.com/s/b6b1xdw5aklrrny971e3to6ku3vtt2wz",
+          "description": "Leaf trait phenotypic data from Tian et al. 2011. Genome-wide association study of leaf architecture in the maize nested association mapping population. *Nature Genetics* 43: 159-162.",
+          "released": "2011-02-21"
+        },
+        {
+          "name": "Buckler_etal_2009_Science_flowering_time_data-090807.zip",
+          "href": "https://cornell.box.com/s/su1vodojjq5g8wg2aw8crimdx6328px6",
+          "description": "Flowering time phenotypes and imputed genotypes of our maize NAM population from Buckler et al. 2009. *Science* 325: 714-718.",
+          "released": "2009-08-07"
+        },
+        {
+          "name": "NAM_Flowering_Time_Summary_Population_Level-080409.xls",
+          "href": "https://cornell.box.com/s/1vzistzttcgz29luioml8utrpsvtrnhv",
+          "description": "Flowering times (mean, min, max) for NAM families summarized within and across 8 summer environments.",
+          "released": "2008-04-09"
+        },
+        {
+          "name": "NAM_2006_trait_means-071008.xls",
+          "href": "https://cornell.box.com/s/k7asacjprz8uaii20j7874aapzks185g",
+          "description": "Phenotypic trait genetic means for our maize Nested Association Mapping population (measured in summer 2006).",
+          "released": "2008-07-10"
+        },
+        {
+          "name": "NAM_2006_trait_herit-071008.xls",
+          "href": "https://cornell.box.com/s/iec9tnbk71eh7lh2cgp18ynv6hoc54h0",
+          "description": "Phenotypic trait heritabilities for our maize Nested Association Mapping population (measured in summer 2006).",
+          "released": "2008-07-10"
+        }
+      ]
+    },
+    {
+      "id": "ames",
+      "title": "USDA Ames inbred collection phenotypes",
+      "description": "Phenotypes for the complete USDA Ames collection of maize inbreds.",
+      "citation": "[Romay et al. (2013) *Genome Biology* 14:R55](http://www.ncbi.nlm.nih.gov/pubmed/23759205)",
+      "gateway": "https://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=11",
+      "files": [
+        {
+          "name": "Romay_etal_2013_GenomeBiol_phenotypes-130503.txt",
+          "href": "https://cornell.box.com/s/f4zs57uqgb9jjxb29nhp5ht2m1dleg1i",
+          "description": "Phenotypic data (BLUPs) from [Romay et al. 2013. Comprehensive genotyping of the USA national maize inbred seed bank. *Genome Biology* 14:R55](http://genomebiology.com/2013/14/6/R55).",
+          "released": "2013-05-03"
+        },
+        {
+          "name": "Romay_etal_2012_GenomeBiol_RawPhenos20150325.xlsx",
+          "href": "https://cornell.box.com/s/qjnkgzkv0rjrii5qczig3aeagsz9pu4x",
+          "description": "Raw phenotypic data from [Romay et al. 2013. Comprehensive genotyping of the USA national maize inbred seed bank. *Genome Biology* 14:R55](http://genomebiology.com/2013/14/6/R55).",
+          "released": "2015-03-25"
+        },
+        {
+          "name": "Peiffer2014Genetics_blupPhenos20150325.xlsx",
+          "href": "https://cornell.box.com/s/59kqlf5n00afuwk25vtoh7i32f8vu4o3",
+          "description": "Phenotypic data (BLUPs) from [Peiffer et al. 2014. The genetic architecture of maize height. *Genetics* 196:1337](http://dx.doi.org/10.1534/genetics.113.159152). Includes NAM and the maize 282 as well as the Ames inbreds.",
+          "released": "2015-03-25"
+        }
+      ]
+    },
+    {
+      "id": "domestication",
+      "title": "Domestication phenotypes",
+      "description": "Domestication trait phenotypes for our custom teosinte-maize populations.",
+      "gateway": "https://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=12",
+      "files": [
+        {
+          "name": "Studer_Doebley_2012_Genetics_data-120507.xlsx",
+          "href": "https://cornell.box.com/s/poppbanf4xyh2w5fkq3gvfeu16cl3267",
+          "description": "Phenotypic and genotypic data from Studer and Doebley 2012. Evidence for a natural allelic series at the maize domestication locus *teosinte branched 1*. *Genetics* 191: 951-958.",
+          "released": "2012-05-07"
+        },
+        {
+          "name": "Studer_2011_NatGenet_tb1_data-110706.xlsx",
+          "href": "https://cornell.box.com/s/5lkfn1lwgm7rjda8p2650d0h80jmxjub",
+          "description": "Phenotypic and genotypic data from Studer et al. 2011. A transposon insertion in the maize gene *tb1* functions as an enhancer and was a causative variant for change in plant architecture during maize domestication. *Nature Genetics* 43: 1160-1163.",
+          "released": "2011-07-06"
+        },
+        {
+          "name": "Studer_Doebley_2011_Genetics_data-110405.xlsx",
+          "href": "https://cornell.box.com/s/2xf3qgq9sxv72y296mqmslz8601s1i6g",
+          "description": "Phenotypic and genotypic data from Studer and Doebley 2011. Do large effect QTLs fractionate? A case study at the maize domestication QTL *teosinte branched 1*. *Genetics* 188: 673-681.",
+          "released": "2011-04-05"
+        }
+      ]
+    }
+  ]
+}

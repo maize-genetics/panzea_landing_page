@@ -1,0 +1,59 @@
+---
+import { url } from '../../lib/url';
+
+interface Props {
+  id: string;
+  title: string;
+  lede?: string;
+  action?: { label: string; href: string };
+}
+
+const { id, title, lede, action } = Astro.props;
+---
+
+<section class="section" aria-labelledby={id}>
+  <div class="head">
+    <h2 id={id}>{title}</h2>
+    {
+      action && (
+        <a href={url(action.href)}>
+          {action.label} <span aria-hidden="true">→</span>
+        </a>
+      )
+    }
+  </div>
+  {lede && <p class="section-lede">{lede}</p>}
+  <slot />
+</section>
+
+<style>
+  .section {
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    padding-bottom: 0.3rem;
+    margin-bottom: 0.9rem;
+    border-bottom: 3px solid var(--gold-300);
+  }
+
+  h2 {
+    margin: 0;
+    scroll-margin-top: 6rem;
+  }
+
+  .head a {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .section-lede {
+    max-width: var(--measure);
+    color: var(--ink-muted);
+  }
+</style>
