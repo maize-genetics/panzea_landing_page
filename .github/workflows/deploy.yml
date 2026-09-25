@@ -18,6 +18,12 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Set the repository variable PANZEA_BASE to /panzea_landing_page while
+      # previewing from the github.io project URL; leave it unset once DNS
+      # points www.panzea.org at Pages. Build and verify must both see it.
+      PANZEA_BASE: ${{ vars.PANZEA_BASE }}
+      PANZEA_SITE: ${{ vars.PANZEA_SITE }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -33,12 +39,6 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          # Set the repository variable PANZEA_BASE to /panzea_landing_page while
-          # previewing from the github.io project URL; leave it unset once DNS
-          # points www.panzea.org at Pages.
-          PANZEA_BASE: ${{ vars.PANZEA_BASE }}
-          PANZEA_SITE: ${{ vars.PANZEA_SITE }}
 
       - name: Verify legacy URLs and internal links
         run: npm run verify
