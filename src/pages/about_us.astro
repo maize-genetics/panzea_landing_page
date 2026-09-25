@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Feature from '../components/outreach/Feature.astro';
+import PillLink from '../components/outreach/PillLink.astro';
+import Section from '../components/outreach/Section.astro';
+import TopicCards from '../components/outreach/TopicCards.astro';
+import { url } from '../lib/url';
+import worldMap from '../assets/pages/about_us-hero.jpg';
+
+const STATS = [
+  { value: '10+', label: 'years of maize diversity research' },
+  { value: '150+', label: 'publications', href: '/publications' },
+  { value: '100+', label: 'scientists trained', href: '/allpeople' },
+];
+
+const SECTION = [
+  {
+    eyebrow: 'Background',
+    title: 'History of Panzea',
+    text: 'How more than a decade of work shed light on maize domestication and built mapping resources like the NAM panel.',
+    href: '/history-of-panzea',
+    cta: 'Read the history',
+  },
+  {
+    eyebrow: 'The team',
+    title: 'Current Project',
+    text: 'Our NSF funding, the member labs behind the project, and our collaborators.',
+    href: '/current-project',
+    cta: 'Meet the project',
+  },
+  {
+    eyebrow: 'Updates',
+    title: 'News',
+    text: 'Stories, press coverage, videos, and recent publications from the project.',
+    href: '/news',
+    cta: 'See the news',
+  },
+  {
+    eyebrow: 'Get in touch',
+    title: 'Contact Us',
+    text: 'Who to contact about data, education and outreach, administration, and TASSEL.',
+    href: '/contact-us',
+    cta: 'Contact us',
+  },
+];
+---
+
+<BaseLayout
+  title="About us"
+  description="Panzea is a group of scientists from the NSF-funded project Biology of Rare Alleles in Maize and its Wild Relatives. Learn about our history, team, news, and how to reach us."
+>
+  <Feature
+    id="who-we-are"
+    image={worldMap}
+    alt="A map of the world made from maize kernels on a green lawn"
+    eyebrow="Who we are"
+    title="Scientists studying maize diversity"
+    eager
+  >
+    <p>
+      We are a group of scientists who worked on an NSF-funded project called &ldquo;<a
+        href="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1238014"
+        rel="noopener">Biology of Rare Alleles in Maize and its Wild Relatives</a
+      >&rdquo;.
+    </p>
+    <p>
+      This project was an accomplishment-based renewal of the NSF-funded project &ldquo;<a
+        href="http://www.nsf.gov/awardsearch/showAward?AWD_ID=0820619"
+        rel="noopener">Genetic Architecture of Maize and Teosinte</a
+      >&rdquo;. Scientifically, however, the project extended over more than a decade, and has
+      pioneered the methods for genetic mapping, evolution, and population genetics, which are now
+      applied to hundreds of species.
+    </p>
+    <Fragment slot="actions">
+      <PillLink href="/history-of-panzea" variant="solid">Our history</PillLink>
+      <PillLink href="/current-project">The current project</PillLink>
+    </Fragment>
+  </Feature>
+
+  <section class="impact" aria-labelledby="impact">
+    <h2 id="impact" class="visually-hidden">Project impact</h2>
+    <p class="impact-lede">
+      The project has developed resources to study maize diversity including germplasm,{' '}
+      <a href={url('/data')}>data</a>, and publications, and trained a generation of new scientists.
+    </p>
+    <ul class="stats">
+      {
+        STATS.map((s) => (
+          <li class="stat">
+            <span class="value">{s.value}</span>
+            {s.href ? (
+              <a class="label" href={url(s.href)}>
+                {s.label}
+              </a>
+            ) : (
+              <span class="label">{s.label}</span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <Section id="explore" title="Explore About us">
+    <TopicCards topics={SECTION} />
+  </Section>
+
+  <Section id="resources" title="Project resources">
+    <p class="pills">
+      <PillLink href="/data">Data</PillLink>
+      <PillLink href="/publications">Publications</PillLink>
+      <PillLink href="/allpeople">People</PillLink>
+      <PillLink href="/education-and-outreach">Education and outreach</PillLink>
+    </p>
+  </Section>
+</BaseLayout>
+
+<style>
+  .impact {
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+
+  .impact-lede {
+    max-width: var(--measure);
+    font-size: var(--step-1);
+  }
+
+  .stats {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .value {
+    font-family: var(--font-display);
+    font-size: var(--step-4);
+    line-height: 1;
+    color: var(--green-700);
+  }
+
+  .label {
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+
+  a.label {
+    color: var(--green-700);
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+  }
+</style>
