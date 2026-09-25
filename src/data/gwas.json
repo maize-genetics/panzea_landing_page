@@ -1,0 +1,35 @@
+{
+  "datasets": [
+    {
+      "id": "nam-flowering-qtl",
+      "title": "NAM flowering time QTL results",
+      "description": "Curated NAM flowering time results analyzed in Buckler *et al.* 2009.",
+      "citation": "[Buckler *et al.* 2009. The genetic architecture of maize flowering time. *Science* 325(5941):714–718](https://doi.org/10.1126/science.1174276)",
+      "gateway": "https://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=36",
+      "files": [
+        {
+          "name": "JointGLMModels090324QTLLocations.xlsx",
+          "href": "https://cornell.box.com/s/y55fsczejbknawogsh5r8a8ygku978ck",
+          "description": "QTL locations for the joint GLM models for flowering time traits.",
+          "released": "2009-08-07"
+        }
+      ]
+    },
+    {
+      "id": "nam-gwas",
+      "title": "NAM-GWAS results",
+      "description": "Curated NAM-GWAS results analyzed in Wallace *et al.* 2014.",
+      "citation": "[Wallace *et al.* 2014. Association mapping across numerous traits reveals patterns of functional variation in maize. *PLoS Genetics* 10(12):e1004845](https://doi.org/10.1371/journal.pgen.1004845)",
+      "gateway": "https://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=14",
+      "files": [
+        {
+          "name": "Wallace_etal_2014_PLoSGenet_GWAS_hits-150112.txt",
+          "href": "https://cornell.box.com/s/3fejkrbd1jh1u0q2f50bfj8odr428fi6",
+          "description": "Curated GWAS hits across numerous traits in the NAM population.",
+          "reference": "AGPv2",
+          "released": "2015-01-12"
+        }
+      ]
+    }
+  ]
+}

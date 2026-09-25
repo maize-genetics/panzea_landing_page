@@ -35,11 +35,11 @@
       },
       {
         "label": "Sequence Data",
-        "href": "http://cbsusrv04.tc.cornell.edu/users/panzea/filegateway.aspx?category=Sequences"
+        "href": "/sequence-data"
       },
       {
         "label": "Genome Annotations",
-        "href": "http://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=26"
+        "href": "/genome-annotations"
       },
       {
         "label": "Phenotypes",
@@ -51,7 +51,7 @@
       },
       {
         "label": "RNAseq Data",
-        "href": "http://cbsusrv04.tc.cornell.edu/users/panzea/filegateway.aspx?category=RNAseq"
+        "href": "/rnaseq-data"
       },
       {
         "label": "Collaborators\u2019 Data",

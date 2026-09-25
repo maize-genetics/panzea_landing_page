@@ -1,0 +1,294 @@
+---
+import { mdInline } from '../lib/markdown';
+
+export type DatasetFile = {
+  name: string;
+  /** Omit when the original host no longer serves the file. */
+  href?: string;
+  description: string;
+  released?: string;
+  reference?: string;
+  size?: string;
+};
+
+export type Dataset = {
+  id: string;
+  title: string;
+  description: string;
+  citation?: string;
+  tags?: string[];
+  /** Markdown shown as a notice, e.g. when downloads are unavailable. */
+  notice?: string;
+  links?: { label: string; href: string }[];
+  gateway?: string;
+  files?: DatasetFile[];
+};
+
+interface Props {
+  dataset: Dataset;
+}
+
+const { dataset: d } = Astro.props;
+
+const FORMATS: Record<string, string> = {
+  bed: 'BED',
+  dat: 'BED',
+  txt: 'Text',
+  xls: 'Excel',
+  xlsx: 'Excel',
+  zip: 'ZIP',
+};
+const format = (name: string) => FORMATS[name.split('.').pop()?.toLowerCase() ?? ''] ?? 'File';
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+const released = (iso: string) => dateFmt.format(new Date(`${iso}T00:00:00Z`));
+---
+
+<section class="group" aria-labelledby={d.id}>
+  <h2 id={d.id}>{d.title}</h2>
+  {
+    d.tags && (
+      <ul class="tags" aria-label="Details">
+        {d.tags.map((t) => (
+          <li>{t}</li>
+        ))}
+      </ul>
+    )
+  }
+  <p class="group-desc" set:html={mdInline(d.description)} />
+  {
+    d.citation && (
+      <p class="cite">
+        <strong>Citation:</strong> <span set:html={mdInline(d.citation)} />
+      </p>
+    )
+  }
+  {d.notice && <p class="notice" set:html={mdInline(d.notice)} />}
+
+  {
+    d.files && d.files.length > 0 && (
+      <ul class="files">
+        {d.files.map((f) => (
+          <li class="file">
+            <div class="file-main">
+              {f.href ? (
+                <a class="file-name" href={f.href} rel="noopener">
+                  {f.name}
+                </a>
+              ) : (
+                <span class="file-name unavailable">
+                  {f.name} <span class="flag">Link unavailable</span>
+                </span>
+              )}
+              <p class="file-desc" set:html={mdInline(f.description)} />
+            </div>
+            <ul class="meta" aria-label="File details">
+              <li class="format">{format(f.name)}</li>
+              {f.reference && <li>{f.reference}</li>}
+              {f.size && <li>{f.size}</li>}
+              {f.released && (
+                <li>
+                  <time datetime={f.released}>{released(f.released)}</time>
+                </li>
+              )}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    d.links && d.links.length > 0 && (
+      <p class="actions">
+        {d.links.map((l) => (
+          <a class="btn" href={l.href} rel="noopener">
+            {l.label} <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </p>
+    )
+  }
+
+  {
+    d.gateway && (
+      <a class="gateway" href={d.gateway} rel="noopener">
+        View this data set on the Panzea file gateway <span aria-hidden="true">↗</span>
+      </a>
+    )
+  }
+</section>
+
+<style>
+  .group {
+    margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+  .group h2 {
+    scroll-margin-top: 6rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 3px solid var(--gold-300);
+  }
+
+  .tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: -0.25rem 0 0.75rem;
+    padding: 0;
+    font-size: 0.8rem;
+  }
+
+  .tags li {
+    padding: 0.1rem 0.55rem;
+    font-weight: 600;
+    color: var(--green-700);
+    background: var(--gold-100);
+    border: 1px solid var(--gold-300);
+    border-radius: 999px;
+  }
+
+  .group-desc,
+  .cite,
+  .notice {
+    max-width: var(--measure);
+  }
+
+  .cite {
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+  }
+
+  .notice {
+    padding: 0.75rem 1rem;
+    font-size: 0.92rem;
+    background: var(--gold-100);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+  }
+
+  .files {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .file {
+    display: grid;
+    gap: 0.5rem 1.5rem;
+    padding: 0.95rem 1.15rem;
+  }
+
+  .file + .file {
+    border-top: 1px solid var(--border);
+  }
+
+  .file:hover {
+    background: var(--surface-sunken);
+  }
+
+  @media (min-width: 48rem) {
+    .file {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+    }
+  }
+
+  .file-name {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .file-name.unavailable {
+    color: var(--ink-muted);
+  }
+
+  .flag {
+    margin-left: 0.35rem;
+    padding: 0.05rem 0.45rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--brown-700);
+    background: var(--gold-100);
+    border: 1px solid var(--gold-500);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .file-desc {
+    margin: 0.25rem 0 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    max-width: 72ch;
+  }
+
+  .meta {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .meta li {
+    padding: 0.1rem 0.55rem;
+    color: var(--ink-muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .meta .format {
+    font-weight: 700;
+    color: var(--green-700);
+    background: var(--gold-100);
+    border-color: var(--gold-300);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.45rem 1.05rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+    color: #fff;
+    background: var(--green-700);
+    border: 1px solid var(--green-700);
+    border-radius: 999px;
+  }
+
+  .btn:hover {
+    color: #fff;
+    background: var(--green-600);
+    border-color: var(--green-600);
+  }
+
+  .gateway {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+</style>

@@ -12,7 +12,7 @@ cards:
     image: "../../assets/pages/data-card-2.png"
     text: "From this page you can obtain the latest public, \"flat file\" versions of prepackaged, phenotypic data sets. These phenotypes are from the maize 282 association panel, the NAM population, the USDA Ames inbreds, and custom teosinte populations for studying domestication traits."
   - title: "GWAS Results"
-    href: "http://cbsusrv04.tc.cornell.edu/users/panzea/filegateway.aspx?category=GWASResults"
+    href: "/gwas-results"
     image: "../../assets/pages/data-card-3.png"
     text: "From this page you can obtain lists of SNPs or other DNA polymorphisms associated with traits in our GWAS studies."
 ---

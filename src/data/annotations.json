@@ -1,0 +1,37 @@
+{
+  "datasets": [
+    {
+      "id": "mnase-hs",
+      "title": "MNase hypersensitive regions",
+      "tags": [
+        "MNase-seq",
+        "BED",
+        "AGPv3"
+      ],
+      "description": "Open chromatin regions in the maize genome, found with a differential nuclease sensitivity assay based on micrococcal nuclease (MNase) digestion of root and shoot tissue from seedlings. Files are in BED format with three columns: chromosome, start, and end. Coordinates are 0-based and end-exclusive.",
+      "citation": "Rodgers-Melnick E, Vera DL, Bass HW, Buckler ES. 2016. [Open chromatin reveals the functional maize genome. *PNAS* 113(22):E3177–E3184](https://www.ncbi.nlm.nih.gov/pubmed/27185945)",
+      "notice": "The processed BED files were hosted on the CyVerse Discovery Environment, and those links no longer work. Raw reads are still on NCBI SRA; email [qisun@cornell.edu](mailto:qisun@cornell.edu) for the processed files.",
+      "links": [
+        {
+          "label": "Raw reads: NCBI SRA SRP064243",
+          "href": "https://www.ncbi.nlm.nih.gov/Traces/study/?acc=SRP064243"
+        }
+      ],
+      "gateway": "https://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=26",
+      "files": [
+        {
+          "name": "AP.bfthresh1.1.MNaseHS.Ranges.dat",
+          "description": "MNase HS regions from shoot tissue of seedlings.",
+          "reference": "AGPv3",
+          "size": "5.2 MB"
+        },
+        {
+          "name": "RP.bfthresh1.1.MNaseHS.Ranges.dat",
+          "description": "MNase HS regions from root tissue of seedlings.",
+          "reference": "AGPv3",
+          "size": "3.0 MB"
+        }
+      ]
+    }
+  ]
+}

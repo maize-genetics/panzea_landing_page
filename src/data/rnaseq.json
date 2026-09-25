@@ -1,0 +1,20 @@
+{
+  "datasets": [
+    {
+      "id": "kremling-2018",
+      "title": "Expression matrices from Kremling et al. 2018",
+      "tags": [
+        "Maize 282"
+      ],
+      "description": "Expression matrices calculated from three RNA-seq data sets of the maize 282 association panel, published in the CyVerse Data Commons.",
+      "citation": "[Kremling *et al.* 2018. Dysregulation of expression correlates with rare-allele burden and fitness loss in maize. *Nature*](https://doi.org/10.1038/nature25966)",
+      "links": [
+        {
+          "label": "CyVerse Data Commons: doi:10.25739/3ph0-x861",
+          "href": "https://doi.org/10.25739/3ph0-x861"
+        }
+      ],
+      "gateway": "https://cbsusrv04.tc.cornell.edu/users/panzea/filegateway.aspx?category=RNAseq"
+    }
+  ]
+}

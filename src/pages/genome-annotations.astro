@@ -1,0 +1,20 @@
+---
+import DatasetPage from '../components/DatasetPage.astro';
+import type { Dataset } from '../components/DatasetGroup.astro';
+import data from '../data/annotations.json';
+
+// Content mirrors the Cornell file gateway the old page linked to.
+const datasets = data.datasets as Dataset[];
+---
+
+<DatasetPage
+  title="Genome Annotations"
+  description="Maize genome annotation data from Panzea: MNase hypersensitive (open chromatin) regions from seedling root and shoot tissue."
+  datasets={datasets}
+  related={[
+    { label: 'Sequence data', href: '/sequence-data' },
+    { label: 'Genotypes', href: '/genotypes' },
+  ]}
+>
+  <p>Genome annotation data files produced by the project.</p>
+</DatasetPage>

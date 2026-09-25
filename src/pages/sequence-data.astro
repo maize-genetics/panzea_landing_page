@@ -1,0 +1,23 @@
+---
+import DatasetPage from '../components/DatasetPage.astro';
+import type { Dataset } from '../components/DatasetGroup.astro';
+import data from '../data/sequences.json';
+
+// Content mirrors the Cornell file gateway the old page linked to.
+const datasets = data.datasets as Dataset[];
+---
+
+<DatasetPage
+  title="Sequence Data"
+  description="Maize whole genome sequencing data from Panzea, used to build haplotype maps (HapMap 3.2.1, maize 282 panel) and de novo genome assemblies (CML247)."
+  datasets={datasets}
+  related={[
+    { label: 'Genotypes', href: '/genotypes' },
+    { label: 'Genome annotations', href: '/genome-annotations' },
+    { label: 'RNA-seq data', href: '/rnaseq-data' },
+  ]}
+>
+  <p>
+    Whole genome sequencing data used to build haplotype maps and genome assemblies.
+  </p>
+</DatasetPage>

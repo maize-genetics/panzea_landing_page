@@ -1,0 +1,46 @@
+{
+  "datasets": [
+    {
+      "id": "hapmap-321",
+      "title": "HapMap 3.2.1 whole genome sequencing data",
+      "tags": [
+        "For genotyping",
+        "BAM",
+        "B73 v3"
+      ],
+      "description": "Alignments to the maize B73 reference genome v3, generated with `bwa mem`, with BAM index files from `samtools index`. If you need FASTQ files, the [SamToFastq tool in Picard](https://broadinstitute.github.io/picard/command-line-overview.html#SamToFastq) converts BAM to FASTQ.",
+      "citation": "[Construction of the third generation *Zea mays* haplotype map. *GigaScience*, 2017. doi:10.1093/gigascience/gix134](https://www.ncbi.nlm.nih.gov/pubmed/29300887)",
+      "notice": "The file gateway no longer links to these BAM files. Email [qisun@cornell.edu](mailto:qisun@cornell.edu) for access.",
+      "gateway": "https://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=23"
+    },
+    {
+      "id": "maize-282",
+      "title": "Maize 282 association panel",
+      "tags": [
+        "For genotyping",
+        "FASTQ",
+        "BAM"
+      ],
+      "description": "Whole genome sequencing data in both FASTQ and BAM formats. Genotype calls derived from these data are on the [Genotypes](/genotypes#hapmap) page.",
+      "citation": "[Construction of the third generation *Zea mays* haplotype map. *GigaScience*, 2017. doi:10.1093/gigascience/gix134](https://www.ncbi.nlm.nih.gov/pubmed/29300887)",
+      "links": [
+        {
+          "label": "NCBI SRA: PRJNA389800",
+          "href": "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA389800"
+        }
+      ],
+      "gateway": "https://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=24"
+    },
+    {
+      "id": "cml247",
+      "title": "CML247",
+      "tags": [
+        "For de novo assembly",
+        "130X"
+      ],
+      "description": "Five PCR-free libraries sequenced for CML247 at 130X in total: a 500 bp library (~65X, 2×300 bp, 10 MiSeq lanes), an 800 bp library (~17X, 2×150 bp, 1 HiSeq 2500 lane), and 3–5 kb, 5–7 kb, and 8–10 kb mate-pair libraries (each ~17X, 2×150 bp, 1 HiSeq 2500 lane).",
+      "notice": "The file gateway does not link to these reads. Email [qisun@cornell.edu](mailto:qisun@cornell.edu) for access.",
+      "gateway": "https://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=22"
+    }
+  ]
+}

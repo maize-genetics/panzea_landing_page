@@ -1,0 +1,21 @@
+---
+import DatasetPage from '../components/DatasetPage.astro';
+import type { Dataset } from '../components/DatasetGroup.astro';
+import data from '../data/rnaseq.json';
+
+// Content mirrors the Cornell file gateway the old page linked to.
+const datasets = data.datasets as Dataset[];
+---
+
+<DatasetPage
+  title="RNA-seq Data"
+  description="Maize RNA-seq expression matrices from Panzea for the 282 association panel (Kremling et al. 2018), published in the CyVerse Data Commons."
+  datasets={datasets}
+  related={[
+    { label: 'Sequence data', href: '/sequence-data' },
+    { label: 'Genotypes', href: '/genotypes' },
+    { label: 'Phenotypes', href: '/phenotypes' },
+  ]}
+>
+  <p>RNA-seq data files produced by the project.</p>
+</DatasetPage>

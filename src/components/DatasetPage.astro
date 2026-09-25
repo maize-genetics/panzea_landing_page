@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+import DatasetGroup, { type Dataset } from './DatasetGroup.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  datasets: Dataset[];
+  related: { label: string; href: string }[];
+}
+
+const { title, description, datasets, related } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="lede"><slot /></div>
+
+  {datasets.map((d) => <DatasetGroup dataset={d} />)}
+
+  <p class="tip">
+    If a download link doesn't open, try right-clicking it and opening it in a new tab. Looking for
+    other data? See{' '}
+    {
+      related.map((r, i) => (
+        <>{i > 0 && (i === related.length - 1 ? ' and ' : ', ')}<a href={url(r.href)}>{r.label}</a></>
+      ))
+    }.
+  </p>
+</BaseLayout>
+
+<style>
+  .lede {
+    max-width: var(--measure);
+    margin-bottom: 2rem;
+  }
+
+  .lede :global(p:first-child) {
+    font-size: var(--step-1);
+  }
+
+  .tip {
+    max-width: var(--measure);
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+</style>

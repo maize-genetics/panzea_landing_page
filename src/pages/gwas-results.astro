@@ -1,85 +1,24 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { url } from '../lib/url';
+import DatasetPage from '../components/DatasetPage.astro';
+import type { Dataset } from '../components/DatasetGroup.astro';
+import data from '../data/gwas.json';
 
-const GATEWAY = 'https://cbsusrv04.tc.cornell.edu/users/panzea/filegateway.aspx?category=GWASResults';
+// Content mirrors the Cornell file gateway the old page linked to.
+const datasets = data.datasets as Dataset[];
 ---
 
-<BaseLayout
+<DatasetPage
   title="GWAS Results"
-  description="Lists of SNPs and other DNA polymorphisms associated with traits in Panzea GWAS studies, hosted on the Panzea file gateway at Cornell."
+  description="Lists of SNPs and other DNA polymorphisms associated with traits in Panzea GWAS studies of the maize NAM population."
+  datasets={datasets}
+  related={[
+    { label: 'Genotypes', href: '/genotypes' },
+    { label: 'Phenotypes', href: '/phenotypes' },
+  ]}
 >
-  <p class="lede">
-    Obtain lists of SNPs or other DNA polymorphisms associated with traits in our GWAS studies.
+  <p>Obtain lists of SNPs or other DNA polymorphisms associated with traits in our GWAS studies.</p>
+  <p>
+    This project has performed GWAS for numerous traits in various study populations. Some of our
+    results are shared here.
   </p>
-
-  <section class="gateway" aria-labelledby="gateway-heading">
-    <p class="eyebrow">Hosted at Cornell University</p>
-    <h2 id="gateway-heading">Panzea file gateway</h2>
-    <p>GWAS result files are published on the Panzea file gateway at Cornell.</p>
-    <a class="btn" href={GATEWAY} rel="noopener">
-      Browse GWAS results <span aria-hidden="true">↗</span>
-    </a>
-  </section>
-
-  <p class="tip">
-    If a link doesn't open, try right-clicking it and opening it in a new tab. Looking for other
-    data? See <a href={url('/genotypes')}>Genotypes</a> and{' '}
-    <a href={url('/phenotypes')}>Phenotypes</a>.
-  </p>
-</BaseLayout>
-
-<style>
-  .lede {
-    font-size: var(--step-1);
-    max-width: var(--measure);
-    margin-bottom: 1.75rem;
-  }
-
-  .eyebrow {
-    margin: 0 0 0.35rem;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--green-700);
-  }
-
-  .gateway {
-    max-width: 44rem;
-    padding: clamp(1.25rem, 3vw, 1.75rem);
-    margin-bottom: 2rem;
-    background: linear-gradient(180deg, var(--sand-200), var(--gold-100));
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-  }
-
-  .gateway h2 {
-    font-size: var(--step-3);
-  }
-
-  .btn {
-    display: inline-block;
-    padding: 0.55rem 1.2rem;
-    font-weight: 600;
-    text-decoration: none;
-    color: #fff;
-    background: var(--green-700);
-    border: 1px solid var(--green-700);
-    border-radius: 999px;
-  }
-
-  .btn:hover {
-    color: #fff;
-    background: var(--green-600);
-    border-color: var(--green-600);
-  }
-
-  .tip {
-    max-width: var(--measure);
-    font-size: 0.92rem;
-    color: var(--ink-muted);
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--border);
-  }
-</style>
+</DatasetPage>
