@@ -1,0 +1,282 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+
+// Each topic keeps its own address: Sara answers two topics from two inboxes.
+type Topic = { topic: string; email: string } & ({ person: string } | { name: string; role?: string });
+
+const topics: Topic[] = [
+  {
+    topic: 'Database and project management',
+    person: 'cinta-romay',
+    email: 'mcr72@cornell.edu',
+  },
+  {
+    topic: 'Education and outreach',
+    person: 'sara-miller',
+    email: 'sjm336@cornell.edu',
+  },
+  {
+    topic: 'General or administrative',
+    person: 'sara-miller',
+    email: 'sara.miller@cornell.edu',
+  },
+  {
+    topic: 'TASSEL software',
+    name: 'Brandon Monier',
+    role: 'Lead Programmer',
+    email: 'bm646@cornell.edu',
+  },
+];
+
+type Contact = {
+  topic: string;
+  email: string;
+  name: string;
+  role?: string;
+  photo?: ImageMetadata;
+  href?: string;
+};
+
+// Contacts with a people profile pull their photo and role from it; others give a name.
+const contacts: Contact[] = await Promise.all(
+  topics.map(async (t) => {
+    if (!('person' in t)) return t;
+    const entry = await getEntry('people', t.person);
+    if (!entry) throw new Error(`contact-us: no person entry "${t.person}"`);
+    return {
+      topic: t.topic,
+      email: t.email,
+      name: entry.data.name,
+      role: entry.data.role,
+      photo: entry.data.photo,
+      href: url(`/${entry.id}`),
+    };
+  }),
+);
+
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+
+const addresses = [
+  {
+    label: 'Mailing address',
+    lines: ['Cornell University', '175 Biotechnology Building', 'Ithaca, NY 14853'],
+  },
+  {
+    label: 'GPS address',
+    lines: ['526 Campus Road', 'Ithaca, NY 14853'],
+    map: 'https://www.google.com/maps/search/?api=1&query=526+Campus+Road+Ithaca+NY+14853',
+  },
+];
+---
+
+<BaseLayout
+  title="Contact Us"
+  description="Who to contact about Panzea data, education and outreach, administration, and the TASSEL software."
+>
+  <p class="lede">Have a question about Panzea? Reach the person who can help directly.</p>
+
+  <ul class="contacts">
+    {
+      contacts.map(({ topic, email, name, role, photo, href }) => (
+        <li class="contact">
+          <p class="topic">{topic}</p>
+          <div class="who">
+            {photo ? (
+              <Image src={photo} alt="" widths={[72, 144]} sizes="72px" class="avatar" />
+            ) : (
+              <span class="avatar initials" aria-hidden="true">
+                {initials(name)}
+              </span>
+            )}
+            <div>
+              <h2>{href ? <a href={href}>{name}</a> : name}</h2>
+              {role && <p class="role">{role}</p>}
+            </div>
+          </div>
+          <a class="email" href={`mailto:${email}`}>
+            {email}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2 class="section">Find us</h2>
+  <div class="addresses">
+    {
+      addresses.map((a) => (
+        <section class="address" aria-label={a.label}>
+          <h3>{a.label}</h3>
+          <address>
+            {a.lines.map((line) => (
+              <span>{line}</span>
+            ))}
+          </address>
+          {a.map && (
+            <a class="map" href={a.map} rel="noopener">
+              Open in Google Maps <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .lede {
+    max-width: var(--measure);
+    margin-bottom: 2rem;
+  }
+
+  .contacts {
+    list-style: none;
+    margin: 0 0 3rem;
+    padding: 0;
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  }
+
+  /* Subgrid shares the topic, person and email rows across every card in a
+     row, so a topic that wraps to two lines doesn't push its card out of line. */
+  .contact {
+    display: grid;
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    row-gap: 0.9rem;
+    padding: 1.1rem 1.2rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition:
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+
+  .contact:has(a:hover),
+  .contact:has(a:focus-visible) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .topic {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--green-700);
+  }
+
+  .who {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .who :global(.avatar),
+  .initials {
+    flex: none;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--gold-100);
+    border: 2px solid var(--gold-200);
+  }
+
+  .initials {
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--green-700);
+  }
+
+  .who h2 {
+    font-size: var(--step-1);
+    margin: 0;
+  }
+
+  .who h2 a {
+    text-decoration: none;
+  }
+
+  .who h2 a:hover {
+    text-decoration: underline;
+  }
+
+  .role {
+    margin: 0.1rem 0 0;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+  }
+
+  .email {
+    justify-self: start;
+    align-self: end;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--green-700);
+    background: var(--gold-100);
+    border: 1px solid var(--gold-300);
+    border-radius: 999px;
+  }
+
+  .email:hover {
+    color: var(--brown-700);
+    border-color: var(--gold-500);
+  }
+
+  .section {
+    font-size: var(--step-3);
+  }
+
+  .addresses {
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+    max-width: 44rem;
+  }
+
+  .address {
+    padding: 1.1rem 1.2rem;
+    background: var(--gold-100);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .address h3 {
+    font-size: var(--step-1);
+    margin-bottom: 0.4rem;
+  }
+
+  address {
+    font-style: normal;
+    display: grid;
+  }
+
+  .map {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+</style>

@@ -4,7 +4,7 @@ navGroup: "Data"
 retiredTool: false
 cards:
   - title: "Genotypic Data Sets"
-    href: "http://cbsusrv04.tc.cornell.edu/users/panzea/filegateway.aspx?category=Genotypes"
+    href: "/genotypes"
     image: "../../assets/pages/data-card-1.jpg"
     text: "From this page you can obtain the latest public, \"flat file\" versions of prepackaged, genotypic data sets. All of these can be opened with the TASSEL 5 (GUI or command line). The genotypes were obtained by whole genome sequencing (\"HapMap\"), GBS, or with MaizeSNP5O chip or traditional SNP assays."
   - title: "Phenotypic Data Sets"

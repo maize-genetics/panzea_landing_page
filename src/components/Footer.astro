@@ -1,17 +1,6 @@
 ---
 import site from '../data/site.json';
 import { md } from '../lib/markdown';
-import { url } from '../lib/url';
-
-const quickLinks = [
-  { label: 'About us', href: '/about_us' },
-  { label: 'Data', href: '/data' },
-  { label: 'Education and Outreach', href: '/education-and-outreach' },
-  { label: 'People', href: '/allpeople' },
-  { label: 'Publications', href: '/publications' },
-  { label: 'Contact Us', href: '/contact-us' },
-];
-
 // Icon paths are Font Awesome Free (CC BY 4.0), matching the TASSEL site footer.
 const socialLinks = [
   {
@@ -31,18 +20,6 @@ const socialLinks = [
 
 <footer class="site-footer">
   <div class="wrap">
-    <nav class="quick" aria-label="Footer">
-      <ul>
-        {
-          quickLinks.map((l) => (
-            <li>
-              <a href={url(l.href)}>{l.label}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-
     <div class="notes">
       {site.footerNotes.map((note) => <div class="note" set:html={md(note)} />)}
     </div>
@@ -79,15 +56,6 @@ const socialLinks = [
     color: #e9e2d0;
     padding: 2.5rem 0 2rem;
     font-size: 0.925rem;
-  }
-
-  .quick ul {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 1.4rem;
-    margin: 0 0 1.5rem;
-    padding: 0;
   }
 
   /* :global reaches the links inside the Markdown-rendered footer notes. */

@@ -1,0 +1,220 @@
+---
+import { Image } from 'astro:assets';
+import { getEntry } from 'astro:content';
+import PublicationEntry from '../components/PublicationEntry.astro';
+import YouTube from '../components/YouTube.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+import toluca from '../assets/pages/news-hero.jpg';
+
+// Featured papers are looked up by title so the citation stays in sync with
+// the publications collection.
+const FEATURED_PAPERS = [
+  { year: '2015', title: 'The genomic impacts of drift and selection for hybrid performance in maize.' },
+  { year: '2015', title: 'Recombination in diverse maize is stable, predictable, and associated with genetic load.' },
+];
+
+const papers = await Promise.all(
+  FEATURED_PAPERS.map(async ({ year, title }) => {
+    const entry = (await getEntry('publications', year))?.data.entries.find((e) => e.title === title);
+    if (!entry) throw new Error(`news: no ${year} publication titled "${title}"`);
+    return entry;
+  }),
+);
+---
+
+<BaseLayout
+  title="News"
+  description="Stories, press coverage, videos, and recent publications from the Panzea maize diversity project."
+>
+  <p class="lede">Stories from the field, press coverage, and recent work from the project.</p>
+
+  <article class="feature">
+    <Image
+      class="feature-img"
+      src={toluca}
+      alt="Two ears of the maize variety Toluca8786 on a black background, one yellow and one orange-red, with husks pulled back"
+      widths={[480, 744]}
+      sizes="(min-width: 56rem) 24rem, 100vw"
+      loading="eager"
+    />
+    <div class="feature-text">
+      <p class="eyebrow">From the field</p>
+      <h2>Farmers' favorite at the CIMMYT field day</h2>
+      <p>
+        Toluca8786 was the most popular maize accession chosen by farmers at the recent CIMMYT
+        field day. It is an open-pollinated variety, still showing diversity in grain color.
+      </p>
+      <p class="credit">Photo: Denise Costich, CIMMYT</p>
+    </div>
+  </article>
+
+  <div class="highlights">
+    <article class="card">
+      <p class="eyebrow">In the press</p>
+      <h2>
+        <a
+          href="http://www.nytimes.com/2016/02/12/world/americas/oaxacas-native-maize-embraced-by-top-chefs-in-us-and-europe.html"
+          rel="noopener"
+        >
+          Oaxaca's Native Maize Embraced by Top Chefs in the US and Europe
+          <span aria-hidden="true"> ↗</span>
+        </a>
+      </h2>
+      <p class="source">Maize diversity in The New York Times, February 2016</p>
+    </article>
+
+    <article class="card video">
+      <p class="eyebrow">Video</p>
+      <h2>Why I like being a scientist</h2>
+      <YouTube id="6lXkmcnUxNc" title="Why I like being a scientist" />
+      <p class="source">
+        More on our{' '}
+        <a href="https://www.youtube.com/channel/UCS1SdXlyMI1OsSf5yA_oFqw" rel="noopener">
+          YouTube channel
+        </a>
+      </p>
+    </article>
+  </div>
+
+  <section class="papers" aria-labelledby="papers-heading">
+    <h2 id="papers-heading">Past publications</h2>
+    <ol>
+      {papers.map((entry) => <PublicationEntry entry={entry} />)}
+    </ol>
+    <a class="all" href={url('/publications')}>See all publications <span aria-hidden="true">→</span></a>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede {
+    max-width: var(--measure);
+    margin-bottom: 2rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--green-700);
+  }
+
+  .feature {
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    align-items: center;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    margin-bottom: clamp(1.5rem, 3vw, 2rem);
+    background: linear-gradient(180deg, var(--sand-200), var(--gold-100));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  @media (min-width: 56rem) {
+    .feature {
+      grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
+    }
+  }
+
+  .feature :global(.feature-img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 4px solid #fff;
+    box-shadow: var(--shadow-lift);
+  }
+
+  .feature h2 {
+    font-size: var(--step-3);
+  }
+
+  .feature-text p {
+    max-width: 52ch;
+  }
+
+  .credit {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+  }
+
+  .highlights {
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    align-items: start;
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+
+  .card {
+    padding: 1.1rem 1.2rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition:
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+
+  .card:has(h2 a:hover),
+  .card:has(h2 a:focus-visible) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .card h2 {
+    font-size: var(--step-2);
+    margin-bottom: 0.4rem;
+  }
+
+  .card h2 a {
+    text-decoration: none;
+  }
+
+  .card h2 a:hover {
+    text-decoration: underline;
+  }
+
+  .video :global(.yt) {
+    margin: 0.75rem 0;
+  }
+
+  .source {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+  }
+
+  .papers h2 {
+    padding-bottom: 0.3rem;
+    border-bottom: 3px solid var(--gold-300);
+  }
+
+  .papers ol {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    max-width: 52rem;
+  }
+
+  .all {
+    display: inline-block;
+    padding: 0.45rem 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--green-700);
+    background: var(--gold-100);
+    border: 1px solid var(--gold-300);
+    border-radius: 999px;
+  }
+
+  .all:hover {
+    color: var(--brown-700);
+    border-color: var(--gold-500);
+  }
+</style>

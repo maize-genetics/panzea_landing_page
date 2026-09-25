@@ -1,0 +1,437 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Callout from '../components/Callout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+import hapmapImg from '../assets/genotypes/HapMapV2Chr10Plot.png';
+import gbsImg from '../assets/genotypes/GBSAssayWorkflow.png';
+import snpImg from '../assets/genotypes/SNPCluster.png';
+
+// Content mirrors the Cornell file gateway the old page embedded in an iframe.
+const GATEWAY = 'https://cbsusrv04.tc.cornell.edu/users/panzea/download.aspx?filegroupid=';
+const HAPMAP_VCF = 'https://iastate.app.box.com/s/8s77gpdtavyt9rdwav4o1nhndn9m4ivr';
+
+type Dataset = {
+  title: string;
+  tags: string[];
+  description: string;
+  update?: { date: string; text: string };
+  files?: string;
+  download?: string;
+  details: string;
+};
+
+type Section = {
+  id: string;
+  title: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  datasets: Dataset[];
+};
+
+const sections: Section[] = [
+  {
+    id: 'hapmap',
+    title: 'Maize HapMap genotypes',
+    image: hapmapImg,
+    imageAlt: 'Plot of HapMap V2 polymorphisms along maize chromosome 10',
+    datasets: [
+      {
+        title: 'Maize 282 association panel genotypes',
+        tags: ['7x coverage', 'AGPv4', 'VCF'],
+        description:
+          'Genotypes of the 282 association panel based on whole genome sequencing data. This data set includes the same markers as HapMap V3.2.1, but called from higher coverage sequencing data than the HapMap V3.2.1 release. Coordinates are uplifted to AGPv4.',
+        files: 'hmp321_agpv4_chr*.vcf.gz',
+        download: HAPMAP_VCF,
+        details: `${GATEWAY}32`,
+      },
+      {
+        title: 'Maize HapMap V3.2.1 genotypes, imputed',
+        tags: ['LinkImpute', 'AGPv4', 'VCF'],
+        description: 'Uplifted from imputed HapMap 3.2.1 AGPv3.',
+        update: {
+          date: '2016-10-05',
+          text: 'Read depths added to the imputed VCF files, with minor format changes for VCF 4.1 compliance and corrected VCF tags.',
+        },
+        files: 'hmp321_agpv4_chr*.vcf.gz',
+        download: HAPMAP_VCF,
+        details: `${GATEWAY}34`,
+      },
+      {
+        title: 'Maize HapMap V3.2.1 genotypes, not imputed',
+        tags: ['AGPv4', 'VCF'],
+        description: 'Uplifted from AGPv3 genotypes.',
+        update: {
+          date: '2016-10-05',
+          text: 'Minor file format changes for VCF 4.1 compliance.',
+        },
+        files: 'hmp321_agpv4_chr*.vcf.gz',
+        download: HAPMAP_VCF,
+        details: `${GATEWAY}33`,
+      },
+    ],
+  },
+  {
+    id: 'gbs',
+    title: 'Maize GBS genotypes',
+    image: gbsImg,
+    imageAlt: 'Workflow diagram of the genotyping-by-sequencing assay',
+    datasets: [
+      {
+        title: 'ZeaGBS v2.7',
+        tags: ['955,690 SNPs', '17,280 public samples', 'HDF5', 'HapMap'],
+        description:
+          'The current ZeaGBS build, containing genotypes for 955,690 SNPs at more than 60K taxa (samples), 17,280 of which are public. For the public samples, both raw and partially imputed genotypes are available as HDF5 files with AGPv2 coordinates, which open in TASSEL 5. Variants and genotypes are also uplifted to AGPv3 and AGPv4 coordinates in HapMap and TASSEL HDF5 formats.',
+        details: `${GATEWAY}4`,
+      },
+    ],
+  },
+  {
+    id: 'legacy',
+    title: 'Legacy SNPs',
+    image: snpImg,
+    imageAlt: 'SNP genotype cluster plot',
+    datasets: [],
+  },
+];
+---
+
+<BaseLayout
+  title="Genotypes"
+  description="Download public maize genotype data sets from Panzea: HapMap whole-genome sequencing, GBS, and legacy SNP assays, all readable in TASSEL 5."
+>
+  <p class="lede">
+    Download the latest public &ldquo;flat file&rdquo; versions of prepackaged genotypic data
+    sets. All of them open in <a href="https://maize-genetics.github.io/tassel/">TASSEL 5</a> (GUI or
+    command line). The genotypes come from whole genome sequencing (&ldquo;HapMap&rdquo;), GBS, or the
+    MaizeSNP50 chip and traditional SNP assays.
+  </p>
+
+  <nav class="jump" aria-label="Jump to data set">
+    <ul>
+      {
+        sections.map((s) => (
+          <li>
+            <a href={`#${s.id}`}>{s.title.replace('Maize ', '')}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  {
+    sections.map((s) => (
+      <section class="group" aria-labelledby={s.id}>
+        <h2 id={s.id}>{s.title}</h2>
+
+        <div class="overview">
+          <Image class="figure" src={s.image} alt={s.imageAlt} widths={[s.image.width]} />
+          <div class="overview-text">
+            {s.id === 'hapmap' && (
+              <>
+                <Callout title="HapMap downloads are being restored" tone="notice">
+                  <p>
+                    We are working on restoring the download links for HapMap genotypes. If you
+                    need the files now, email <a href="mailto:qisun@cornell.edu">qisun@cornell.edu</a>.
+                  </p>
+                </Callout>
+                <p>
+                  In collaboration with several projects, we have performed whole-genome Illumina
+                  sequencing on hundreds of maize lines, uncovering millions of polymorphisms. These
+                  high density genotypes have enabled GWAS in maize. Several maize HapMap versions
+                  are available, the most recent of which is HapMap V3. The BAM files used to build
+                  HapMap V3 are available through the CyVerse Data Store:{' '}
+                  <a href={`${GATEWAY}23`}>instructions for accessing the BAM files</a>.
+                </p>
+                <p class="cite">
+                  <strong>Citation:</strong> Construction of the third generation{' '}
+                  <i>Zea mays</i> haplotype map.{' '}
+                  <a href="https://www.ncbi.nlm.nih.gov/pubmed/29300887">
+                    GigaScience, 2017. doi:10.1093/gigascience/gix134
+                  </a>
+                </p>
+              </>
+            )}
+            {s.id === 'gbs' && (
+              <p>
+                We have performed Genotyping By Sequencing (GBS) with the enzyme <i>Ape</i>KI and
+                the{' '}
+                <a href="http://dx.doi.org/10.1371/journal.pone.0019379">
+                  Elshire et al. 2011 protocol
+                </a>{' '}
+                on more than 60K maize samples to date. Many of these genotypes are publicly
+                available.
+              </p>
+            )}
+            {s.id === 'legacy' && (
+              <p>
+                We also have SNP genotypic data from more traditional SNP assays, including the{' '}
+                <a href="http://www.illumina.com/products/maizesnp50_dna_analysis_kit.html">
+                  Illumina MaizeSNP50 BeadChip
+                </a>
+                , the Illumina GoldenGate SNP assay, and the Sequenom single-base extension assay.
+              </p>
+            )}
+          </div>
+        </div>
+
+        {s.datasets.length > 0 && (
+          <ul class="datasets">
+            {s.datasets.map((d) => (
+              <li class="dataset">
+                <h3>{d.title}</h3>
+                <ul class="tags" aria-label="Details">
+                  {d.tags.map((t) => (
+                    <li>{t}</li>
+                  ))}
+                </ul>
+                <p class="desc">{d.description}</p>
+                {d.update && (
+                  <p class="update">
+                    <time datetime={d.update.date}>Updated {d.update.date}</time>
+                    {d.update.text}
+                  </p>
+                )}
+                {d.files && (
+                  <p class="files">
+                    Files: <code>{d.files}</code>
+                  </p>
+                )}
+                <p class="actions">
+                  {d.download && (
+                    <a class="btn primary" href={d.download} rel="noopener">
+                      Download VCF files <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                  <a class="btn" href={d.details} rel="noopener">
+                    File details <span aria-hidden="true">↗</span>
+                  </a>
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    ))
+  }
+
+  <p class="tip">
+    If a download link doesn't open, try right-clicking it and opening it in a new tab. Looking for
+    other data? See <a href={url('/phenotypes')}>Phenotypes</a> and{' '}
+    <a href={url('/gwas-results')}>GWAS results</a>.
+  </p>
+</BaseLayout>
+
+<style>
+  .lede {
+    max-width: var(--measure);
+  }
+
+  .jump ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0;
+    margin: 0 0 2.5rem;
+  }
+
+  .jump a {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .jump a:hover {
+    background: var(--gold-100);
+    border-color: var(--gold-500);
+  }
+
+  .group {
+    margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+  .group h2 {
+    scroll-margin-top: 6rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 3px solid var(--gold-300);
+  }
+
+  .overview {
+    display: grid;
+    gap: 1.25rem 1.75rem;
+    align-items: start;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .overview {
+      grid-template-columns: 14rem minmax(0, 1fr);
+    }
+  }
+
+  .overview :global(.figure) {
+    display: block;
+    width: 100%;
+    max-width: 14rem;
+    height: auto;
+    padding: 0.75rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .overview-text {
+    max-width: var(--measure);
+  }
+
+  .overview-text :global(.callout) {
+    margin-top: 0;
+  }
+
+  .overview-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .cite {
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+  }
+
+  .datasets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+  }
+
+  .dataset {
+    display: flex;
+    flex-direction: column;
+    padding: 1.1rem 1.2rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--gold-500);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition:
+      transform 140ms ease,
+      box-shadow 140ms ease;
+  }
+
+  .dataset:has(a:hover),
+  .dataset:has(a:focus-visible) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .dataset h3 {
+    font-size: var(--step-2);
+    margin-bottom: 0.5rem;
+  }
+
+  .tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0 0 0.75rem;
+    padding: 0;
+  }
+
+  .tags li {
+    padding: 0.1rem 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--green-700);
+    background: var(--gold-100);
+    border: 1px solid var(--gold-300);
+    border-radius: 999px;
+  }
+
+  .desc {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .update {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    padding-left: 0.75rem;
+    border-left: 3px solid var(--gold-300);
+  }
+
+  .update time {
+    display: block;
+    font-weight: 700;
+    color: var(--brown-700);
+  }
+
+  .files {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+  }
+
+  .files code {
+    overflow-wrap: anywhere;
+    padding: 0.05rem 0.35rem;
+    background: var(--surface-sunken);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+
+  .actions {
+    margin: auto 0 0;
+    padding-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--green-700);
+    background: var(--surface);
+    border: 1px solid var(--gold-300);
+    border-radius: 999px;
+  }
+
+  .btn:hover {
+    color: var(--brown-700);
+    border-color: var(--gold-500);
+    background: var(--gold-100);
+  }
+
+  .btn.primary {
+    color: #fff;
+    background: var(--green-700);
+    border-color: var(--green-700);
+  }
+
+  .btn.primary:hover {
+    color: #fff;
+    background: var(--green-600);
+    border-color: var(--green-600);
+  }
+
+  .tip {
+    max-width: var(--measure);
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
